@@ -1,0 +1,132 @@
+package com.gesel.gesel.model;
+import jakarta.persistence.*;
+
+
+@Entity
+@Table (name="procesos")
+public class Proceso {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	private String titulo;
+	private String departamento;
+	private String salario;
+	private String ubicacion;
+	private String descripcion;
+	
+	@Enumerated(EnumType.STRING)//enum almacenar como string
+	private ModalidadTrabajo modalidad;
+	
+	private String detalleHibrido;
+	
+	@Enumerated(EnumType.STRING)
+	private EstadoProceso estado;
+	
+	//relación con el cliente
+	@ManyToOne
+	@JoinColumn(name= "cliente_id", nullable = false)
+	private Cliente cliente;
+	
+	//constructor vacío
+	public Proceso() {
+		
+	}
+	
+	//constructor lleno
+	public Proceso(String titulo, String departamento, String salario, String ubicacion, String descripcion, ModalidadTrabajo modalidad, String detalleHibrido, EstadoProceso estado, Cliente cliente) {
+		this.titulo=titulo;
+		this.departamento = departamento;
+		this.salario = salario;
+		this.ubicacion=ubicacion;
+		this.descripcion=descripcion;
+		this.modalidad = modalidad;
+		this.detalleHibrido = detalleHibrido;
+		this.estado = estado;
+		this.cliente= cliente;
+		
+	}
+	
+	
+	//getters y setters
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public String getTitulo() {
+		return titulo;
+	}
+	
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+	
+	public String getDepartamento() {
+		return departamento;
+	}
+	
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
+	}
+	
+	public String getSalario() {
+		return salario;
+	}
+	
+	public void setSalario(String salario) {
+		this.salario = salario;
+	}
+	
+	public String getUbicacion() {
+		return ubicacion;
+	}
+	
+	public void setUbicacion(String ubicacion) {
+		this.ubicacion = ubicacion;
+	}
+	
+	public String getDescripcion() {
+		return descripcion;
+	}
+	
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
+	public ModalidadTrabajo getModalidad() {
+		return modalidad;
+	}
+	
+	public void setModalidad(ModalidadTrabajo modalidad) {
+		this.modalidad = modalidad;
+	}
+	
+	public String getDetalleHibrido() {
+		return detalleHibrido;
+	}
+	
+	public void setDetalleHibrido(String detalleHibrido) {
+		this.detalleHibrido = detalleHibrido;
+	}
+	
+	public EstadoProceso getEstado() {
+		return estado;
+	}
+	
+	public void setEstado(EstadoProceso estado) {
+		this.estado=estado;
+	}
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+	
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+}
