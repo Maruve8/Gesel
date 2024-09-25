@@ -9,6 +9,8 @@ import { ProcesoListComponent } from './components/proceso-list/proceso-list.com
 import { ProcesoFormComponent } from './components/proceso-form/proceso-form.component';
 import { CandidatoListComponent } from './components/candidato-list/candidato-list.component';
 import { CandidatoFormComponent } from './components/candidato-form/candidato-form.component';
+import { EntrevistaListComponent } from './components/entrevista-list/entrevista-list.component';
+import { EntrevistaFormComponent } from './components/entrevista-form/entrevista-form.component';
 
 
 export const routes: Routes = [
@@ -26,6 +28,9 @@ export const routes: Routes = [
     { path: 'candidatos', component: CandidatoListComponent},
     { path: 'candidatos/add', component: CandidatoFormComponent},
     { path: 'candidatos/edit/:id', component: CandidatoFormComponent},
+    { path: 'entrevistas', component: EntrevistaListComponent},
+    { path: 'entrevistas/add', component: EntrevistaFormComponent},
+    { path: 'entrevistas/edit/:id', component: EntrevistaFormComponent},
     { path: '', redirectTo: '/login', pathMatch: 'full' },  // ruta por defecto
     { path: '**', redirectTo: '/login', pathMatch: 'full' } //para rutas no existentes
 ];

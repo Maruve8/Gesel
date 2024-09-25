@@ -1,0 +1,43 @@
+<!--encabezado dinámico, si edit true aparecerá editar, si es false aparecerá añadir-->
+<h2>{{ isEditMode ? 'Editar Entrevista' : 'Añadir Entrevista' }}</h2>
+
+<form (ngSubmit)="saveEntrevista()">
+    <label for="candidato">Candidato</label>
+    <select id="candidato" [(ngModel)]="entrevista.candidato" name="candidato" required>
+        <option *ngFor="let candidato of candidatos" [ngValue]="candidato">
+            {{ candidato.nombre }} {{ candidato.apellidos }}
+        </option>
+    </select>
+
+    <label for="proceso">Proceso de Selección</label>
+    <select id="proceso" [(ngModel)]="entrevista.proceso" name="proceso" required>
+        <option *ngFor="let proceso of procesos" [ngValue]="proceso">
+            {{ proceso.titulo }}
+        </option>
+    </select>
+
+    <label for="fecha">Fecha</label>
+    <input type="date" id="fecha" [(ngModel)]="entrevista.fecha" name="fecha" required>>
+
+    <label for="hora">Hora</label>
+    <input type="time" id="hora" [(ngModel)]="entrevista.hora" name="hora" required>>
+
+    <label for="ubicacion">Ubicación</label>
+    <input type="text" id="ubicacion" [(ngModel)]="entrevista.ubicacion" name="ubicacion" required>>
+        
+    <label for="feedback">Feedback</label>
+    <input type="text" id="feedback" [(ngModel)]="entrevista.feedback" name="feedback">>
+
+    <label for="tipo">Tipo de entrevista</label>
+    <select id="tipo" [(ngModel)]="entrevista.tipo" name="tipo" required>
+        <option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</option>
+    </select>
+    
+
+    
+
+    <button type="submit">
+        {{isEditMode ? 'Guardar Cambios' : 'Nueva Entrevista'}}
+    </button>
+
+</form>

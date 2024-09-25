@@ -1,0 +1,39 @@
+<h2>Gesel Entrevistas</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Candidato</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Ubicación</th>
+            <th>Feedback</th>
+            <th>Tipo de entrevista</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let entrevista of entrevistas">
+            <td>{{entrevista.id}}</td>
+            <td>{{entrevista.candidato?.nombre}} {{entrevista.candidato?.apellidos}}</td>
+            <td>{{entrevista.fecha | date:'yyyy-MM-dd'}}</td>
+            <td>{{entrevista.hora}}</td>
+            <td>{{entrevista.ubicacion}}</td>
+            <td>{{entrevista.feedback}}</td>
+            <td>{{entrevista.tipo}}</td>
+            <td>
+                <button (click)="deleteEntrevista(entrevista.id)">Eliminar</button>
+                <a [routerLink]="['/entrevistas/edit', entrevista.id]">Editar</a>
+                
+            </td>
+        </tr>
+        
+    </tbody>
+</table>
+
+<div style="margin-top: 20px;">
+    <a [routerLink]="['/entrevistas/add']">
+        <button>Añadir Entrevista</button>
+    </a>
+</div>
