@@ -1,0 +1,39 @@
+<h2>Gesel Candidatos</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>CV</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let candidato of candidatos">
+            <td>{{candidato.nombre}}</td>
+            <td>{{candidato.apellidos}}</td>
+            <td>{{candidato.descripcion}}</td>
+            <td>{{candidato.estado}}</td>
+            <td>
+                <!-- si existe un cvUrl, muestra un enlace, si no, indica que no está disponible -->
+                <a *ngIf="candidato.cvUrl" [href]="candidato.cvUrl" target="_blank">Ver CV</a>
+                <span *ngIf="!candidato.cvUrl">No disponible</span>
+            </td>
+            <td>
+                <button (click)="deleteCandidato(candidato.id)">Eliminar</button>
+                <a [routerLink]="['/candidatos/edit', candidato.id]">Editar</a>
+                
+            </td>
+        </tr>
+        
+    </tbody>
+</table>
+
+<div style="margin-top: 20px;">
+    <a [routerLink]="['/candidatos/add']">
+        <button>Añadir Candidato</button>
+    </a>
+</div>

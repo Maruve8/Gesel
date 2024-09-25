@@ -1,0 +1,31 @@
+<h2>Gesel Clientes</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Beneficios</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let cliente of clientes">
+            <td>{{cliente.id}}</td>
+            <td>{{cliente.nombre}}</td>
+            <td>{{cliente.descripcion}}</td>
+            <td>{{cliente.beneficios}}</td>
+            <td>{{cliente.telefono}}</td>
+            <td>{{cliente.email}}</td>
+            <td>
+                <button (click)="deleteCliente(cliente.id)">Eliminar</button>
+                <a [routerLink]="['/clientes/edit', cliente.id]">Editar</a>
+                <a [routerLink]="['/clientes/add']">Añadir</a>
+            </td>
+        </tr>
+        
+    </tbody>
+</table>

@@ -1,0 +1,12 @@
+<!--encabezado dinámico, si edit true aparecerá editar recruiter, si es false aparecerá añadir-->
+<h2>{{ isEditMode ? 'Editar Recruiter' : 'Añadir Recruiter' }}</h2>
+
+<form (ngSubmit)="saveRecruiter()">
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" [(ngModel)]="recruiter.nombre" name="nombre">
+    <label for="apellidos">Apellidos</label>
+    <input type="text" id="apellidos" [(ngModel)]="recruiter.apellidos" name="apellidos">
+
+    <button type="submit">{{isEditMode ? 'Guardar Cambios' : 'Nuevo Recruiter'}}</button>
+
+</form>

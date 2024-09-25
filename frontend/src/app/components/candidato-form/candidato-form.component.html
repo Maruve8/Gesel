@@ -1,0 +1,26 @@
+<!--encabezado dinámico, si edit true aparecerá editar, si es false aparecerá añadir-->
+<h2>{{ isEditMode ? 'Editar Candidato' : 'Añadir Candidato' }}</h2>
+
+<form (ngSubmit)="saveCandidato()">
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" [(ngModel)]="candidato.nombre" name="nombre" required>>
+
+    <label for="apellidos">Apellidos</label>
+    <input type="text" id="apellidos" [(ngModel)]="candidato.apellidos" name="apellidos" required>>
+
+    <label for="descripcion">Descripción</label>
+    <input type="text" id="descripcion" [(ngModel)]="candidato.descripcion" name="descripcion">>
+
+    <label for="estado">Estado</label>
+    <select id="estado" [(ngModel)]="candidato.estado" name="estado">
+        <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+    </select>
+
+    <label for="cvUrl">Currículum</label>
+    <input type="file" id="cvUrl" (change)="onFileSelected($event)" name="cvUrl">>
+
+    <button type="submit">
+        {{isEditMode ? 'Guardar Cambios' : 'Nuevo Candidato'}}
+    </button>
+
+</form>

@@ -1,0 +1,44 @@
+<h2>Gesel Procesos</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Departamento</th>
+            <th>Descripción</th>
+            <th>Ubicación</th>
+            <th>Modalidad</th>
+            <th *ngIf="hasHibrido">Detalle Híbrido</th> <!-- esta columna sólo si hay modalidad híbrida-->
+            <th>Salario</th>
+            <th>Cliente</th>
+            <th>Estado</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let proceso of procesos">
+            <td>{{proceso.titulo}}</td>
+            <td>{{proceso.departamento}}</td>
+            <td>{{proceso.descripcion}}</td>
+            <td>{{proceso.ubicacion}}</td>
+            <td>{{proceso.modalidad}}</td>
+            <td *ngIf="proceso.modalidad === 'HIBRIDO'">{{ proceso.detalleHibrido }}</td>
+            <td>{{proceso.salario}}</td>
+            <td>{{ proceso.cliente ? proceso.cliente.nombre : 'Sin Cliente' }}</td>
+            <td>{{proceso.estado}}</td>
+            <td>
+                <button (click)="deleteProceso(proceso.id)">Eliminar</button>
+                <a [routerLink]="['/procesos/edit', proceso.id]">Editar</a>
+                
+            </td>
+        </tr>
+        
+    </tbody>
+</table>
+
+
+<div style="margin-top: 20px;">
+    <a [routerLink]="['/procesos/add']">
+        <button>Añadir Proceso</button>
+    </a>
+</div>

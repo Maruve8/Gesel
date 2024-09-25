@@ -1,0 +1,47 @@
+<!--encabezado dinámico, si edit true aparecerá editar proceso, si es false aparecerá añadir-->
+<h2>{{ isEditMode ? 'Editar Proceso' : 'Añadir Proceso' }}</h2>
+
+<form (ngSubmit)="saveProceso()">
+    <label for="titulo">Título</label>
+    <input type="text" id="titulo" [(ngModel)]="proceso.titulo" name="titulo" required>>
+
+    <label for="departamento">Departamento</label>
+    <input type="text" id="departamento" [(ngModel)]="proceso.departamento" name="departamento" required>>
+
+    <label for="descripcion">Descripción</label>
+    <input type="text" id="descripcion" [(ngModel)]="proceso.descripcion" name="descripcion" required>>
+
+    <label for="ubicacion">Ubicación</label>
+    <select id="ubicacion" [(ngModel)]="proceso.ubicacion" name="ubicacion" required>
+        <option *ngFor="let ciudad of ciudades" [value]="ciudad">{{ ciudad }}</option>
+    </select>
+
+    <label for="modalidad">Modalidad</label>
+    <select id="modalidad" [(ngModel)]="proceso.modalidad" name="modalidad" (change)="onModalidadChange()" required>
+        <option *ngFor="let modalidad of modalidades" [value]="modalidad">{{ modalidad }}</option>
+    </select>
+
+    <!--descripción de híbrido solo disponible si la modalidad es híbrido-->
+    <div *ngIf="proceso.modalidad === 'HIBRIDO'">
+        <label for="detalleHibrido">Detalle Híbrido</label>
+        <input type="text" id="detalleHibrido" [(ngModel)]="proceso.detalleHibrido" name="detalleHibrido">>
+    </div>
+
+    <label for="salario">Salario</label>
+    <input type="text" id="salario" [(ngModel)]="proceso.salario" name="salario" required>>
+
+    <label for="cliente">Cliente</label>
+    <select id="cliente" [(ngModel)]="proceso.cliente" name="cliente" required>
+        <option *ngFor="let cliente of clientes" [ngvalue]="cliente">{{ cliente.nombre }}</option>
+    </select>
+    
+    <label for="estado">Estado</label>
+    <select id="estado" [(ngModel)]="proceso.estado" name="estado" required>
+        <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+    </select>
+
+    <button type="submit">
+        {{isEditMode ? 'Guardar Cambios' : 'Nuevo Proceso'}}
+    </button>
+
+</form>

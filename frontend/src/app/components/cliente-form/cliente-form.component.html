@@ -1,0 +1,20 @@
+<!--encabezado dinámico, si edit true aparecerá editar cliente, si es false aparecerá añadir-->
+<h2>{{ isEditMode ? 'Editar Cliente' : 'Añadir Cliente' }}</h2>
+
+<form (ngSubmit)="saveCliente()">
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" [(ngModel)]="cliente.nombre" name="nombre" required>>
+    <label for="descripcion">Descripción</label>
+    <input type="text" id="descripcion" [(ngModel)]="cliente.descripcion" name="descripcion" required>>
+    <label for="beneficios">Beneficios</label>
+    <input type="text" id="beneficios" [(ngModel)]="cliente.beneficios" name="beneficios" required>>
+    <label for="telefono">Teléfono</label>
+    <input type="tel" id="telefono" [(ngModel)]="cliente.telefono" name="telefono" required>>
+    <label for="email">Email</label>
+    <input type="email" id="email" [(ngModel)]="cliente.email" name="email" required>>
+
+    <button type="submit" [disabled]="!cliente.nombre || !cliente.descripcion || !cliente.telefono || !cliente.email">
+        {{isEditMode ? 'Guardar Cambios' : 'Nuevo Cliente'}}
+    </button>
+
+</form>

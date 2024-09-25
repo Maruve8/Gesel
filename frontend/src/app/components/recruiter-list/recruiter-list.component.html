@@ -1,0 +1,25 @@
+<h2>Gesel Recruiters</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let recruiter of recruiters">
+            <td>{{recruiter.id}}</td>
+            <td>{{recruiter.nombre}}</td>
+            <td>{{recruiter.apellidos}}</td>
+            <td>
+                <button (click)="deleteRecruiter(recruiter.id)">Eliminar</button>
+                <a [routerLink]="['/recruiters/edit', recruiter.id]">Editar</a>
+                <a [routerLink]="['/recruiters/add']">Añadir</a>
+            </td>
+        </tr>
+        
+    </tbody>
+</table>
