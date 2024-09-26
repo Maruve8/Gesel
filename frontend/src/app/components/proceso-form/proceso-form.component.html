@@ -32,7 +32,7 @@
 
     <label for="cliente">Cliente</label>
     <select id="cliente" [(ngModel)]="proceso.cliente" name="cliente" required>
-        <option *ngFor="let cliente of clientes" [ngvalue]="cliente">{{ cliente.nombre }}</option>
+        <option *ngFor="let cliente of clientes" [ngValue]="cliente">{{ cliente.nombre }}</option>
     </select>
     
     <label for="estado">Estado</label>

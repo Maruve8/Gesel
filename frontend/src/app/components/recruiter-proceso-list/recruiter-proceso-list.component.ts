@@ -22,15 +22,19 @@ ngOnInit(): void {
 }
 
 getAllRelations(): void {
+  
   this.recruiterProcesoService.getAllRelations().subscribe((data) => {
+    console.log('Datos recibidos:', data);
     this.relations = data;
   });
 }
 
 deleteRelation(recruiterId: number, procesoId: number): void {
+   
   this.recruiterProcesoService.deleteRelation(recruiterId, procesoId).subscribe(() => {
     this.getAllRelations(); //actualizar la lista
   });
 }
 
 }
+

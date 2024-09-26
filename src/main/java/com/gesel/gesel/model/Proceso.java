@@ -1,9 +1,12 @@
 package com.gesel.gesel.model;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 
 
 @Entity
 @Table (name="procesos")
+@JsonIgnoreProperties({"recruiters"}) // Ignora la lista de recruiters en Proceso para evitar bucles
 public class Proceso {
 	
 	@Id

@@ -9,12 +9,13 @@
   </thead>
   <tbody>
     <tr *ngFor="let relation of relations">
-      <td>{{relation.recruiter.id}}</td>
-      <td>{{relation.proceso.id}}</td>
+      <td>{{relation.recruiterId}}</td>
+      <td>{{relation.procesoId}}</td>
       <td>
-        <button (click)="deleteRelation(relation.recruiter.id, relation.proceso.id)">Eliminar</button>
+        <button (click)="deleteRelation(relation.recruiterId, relation.procesoId)">Eliminar</button>
       </td>
     </tr>
   </tbody>
 </table>
+
 
