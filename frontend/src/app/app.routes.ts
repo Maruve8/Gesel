@@ -13,6 +13,7 @@ import { EntrevistaListComponent } from './components/entrevista-list/entrevista
 import { EntrevistaFormComponent } from './components/entrevista-form/entrevista-form.component';
 import { RecruiterProcesoListComponent } from './components/recruiter-proceso-list/recruiter-proceso-list.component';
 import { RecruiterCandidatoListComponent } from './components/recruiter-candidato-list/recruiter-candidato-list.component';
+import { RecruiterEntrevistaListComponent } from './components/recruiter-entrevista-list/recruiter-entrevista-list.component';
 
 
 export const routes: Routes = [
@@ -35,6 +36,7 @@ export const routes: Routes = [
     { path: 'entrevistas/edit/:id', component: EntrevistaFormComponent},
     { path: 'recruiter-proceso', component: RecruiterProcesoListComponent },
     { path: 'recruiter-candidato', component: RecruiterCandidatoListComponent},
+    { path: 'recruiter-entrevista', component: RecruiterEntrevistaListComponent},
     { path: '', redirectTo: '/login', pathMatch: 'full' },  // ruta por defecto
     { path: '**', redirectTo: '/login', pathMatch: 'full' } //para rutas no existentes
 ];
