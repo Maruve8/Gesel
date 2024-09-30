@@ -37,6 +37,7 @@ public class WebSecurityConfig {
             		.requestMatchers("/api/candidatos/upload").permitAll() // Permitir acceso sin autenticación a la subida de archivos
                     .requestMatchers("/api/recruiters/**").hasRole("USER") // Requiere el rol de usuario para /api/recruiters/**
                     .requestMatchers("/api/recruiter-proceso/**").permitAll()
+                    .requestMatchers("/api/recruiter-candidato/**").permitAll()
                 .anyRequest().authenticated() // Requerir autenticación para el resto
             )
             .formLogin(form -> form
