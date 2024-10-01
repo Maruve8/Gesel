@@ -15,6 +15,7 @@ import { RecruiterProcesoListComponent } from './components/recruiter-proceso-li
 import { RecruiterCandidatoListComponent } from './components/recruiter-candidato-list/recruiter-candidato-list.component';
 import { RecruiterEntrevistaListComponent } from './components/recruiter-entrevista-list/recruiter-entrevista-list.component';
 import { RecruiterClienteListComponent } from './components/recruiter-cliente-list/recruiter-cliente-list.component';
+import { ProcesoCandidatoListComponent } from './components/proceso-candidato-list/proceso-candidato-list.component';
 
 
 export const routes: Routes = [
@@ -39,6 +40,7 @@ export const routes: Routes = [
     { path: 'recruiter-candidato', component: RecruiterCandidatoListComponent},
     { path: 'recruiter-entrevista', component: RecruiterEntrevistaListComponent},
     { path: 'recruiter-cliente', component: RecruiterClienteListComponent},
+    { path: 'proceso-candidato', component: ProcesoCandidatoListComponent},
     { path: '', redirectTo: '/login', pathMatch: 'full' },  // ruta por defecto
     { path: '**', redirectTo: '/login', pathMatch: 'full' } //para rutas no existentes
 ];
