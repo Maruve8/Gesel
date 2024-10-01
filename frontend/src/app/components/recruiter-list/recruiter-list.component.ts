@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RecruiterService } from '../../services/recruiter.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';  // importar CommonModule para usar ngFor
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-recruiter-list',
@@ -13,7 +14,7 @@ import { CommonModule } from '@angular/common';  // importar CommonModule para u
 export class RecruiterListComponent implements OnInit{
   recruiters: any[] =[];
 
-  constructor(private recruiterService: RecruiterService){}
+  constructor(private recruiterService: RecruiterService, private authService: AuthService){}
 
   ngOnInit(): void {
     this.getRecruiters();
@@ -30,5 +31,9 @@ export class RecruiterListComponent implements OnInit{
     this.recruiterService.deleteRecruiter(id).subscribe(()=>{
       this.getRecruiters(); //para actualizar la lista
     })
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin(); //verififcar si es admin
   }
 }

@@ -17,8 +17,10 @@
             <td>{{recruiter.apellidos}}</td>
             <td>{{recruiter.username}}</td>
             <td>
-                <button (click)="deleteRecruiter(recruiter.id)">Eliminar</button>
-                <a [routerLink]="['/recruiters/edit', recruiter.id]">Editar</a>
+                <ng-container *ngIf="isAdmin()">
+                    <button (click)="deleteRecruiter(recruiter.id)">Eliminar</button>
+                    <a [routerLink]="['/recruiters/edit', recruiter.id]">Editar</a>
+                </ng-container>
                 <a [routerLink]="['/recruiters/add']">Añadir</a>
             </td>
         </tr>

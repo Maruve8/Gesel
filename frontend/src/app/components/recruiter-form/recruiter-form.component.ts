@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecruiterService } from '../../services/recruiter.service';
+import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -21,10 +22,15 @@ export class RecruiterFormComponent implements OnInit {
   constructor(
     private recruiterService: RecruiterService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
+    //verificar si es el admin
+    if (!this.authService.isAdmin()) {
+      this.router.navigate(['/home']); //al home si no es el admin
+    }
     this.route.params.subscribe(params => {
       this.recruiterId = params['id'];
       if (this.recruiterId) {

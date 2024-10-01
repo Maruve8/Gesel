@@ -35,7 +35,8 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
             		.requestMatchers("/api/login", "/", "/home").permitAll() // Permitir acceso sin autenticación
             		.requestMatchers("/api/candidatos/upload").permitAll() // Permitir acceso sin autenticación a la subida de archivos
-                    .requestMatchers("/api/recruiters/**").hasRole("USER") // Requiere el rol de usuario para /api/recruiters/**
+                    .requestMatchers("/api/recruiters/**").hasAnyRole("USER", "ADMIN") // Requiere el rol de usuario para /api/recruiters/**
+                    .requestMatchers("/api/recruiters/add").hasRole("ADMIN") //solo el admin añade recruiters
                     .requestMatchers("/api/recruiter-proceso/**").permitAll()
                     .requestMatchers("/api/recruiter-candidato/**").permitAll()
                     .requestMatchers("/api/recruiter-entrevista/**").permitAll()
@@ -75,8 +76,13 @@ public class WebSecurityConfig {
                 .password(passwordEncoder().encode("password"))
                 .roles("USER")
                 .build();
+        UserDetails admin = User.builder()
+                .username("admin")
+                .password(passwordEncoder().encode("adminpassword")) 
+                .roles("ADMIN") 
+                .build();
 
-        return new InMemoryUserDetailsManager(user);
+        return new InMemoryUserDetailsManager(user, admin);
     }
 
     @Bean
