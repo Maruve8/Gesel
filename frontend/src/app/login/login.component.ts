@@ -28,6 +28,8 @@ export class LoginComponent {
       next: (response) => {
         if (response.status === 200) {
           console.log('Login successful');
+          const userRole = this.username === 'admin' ? 'ADMIN' : 'USER'; //establecer el rol 
+          localStorage.setItem('userRole', userRole); //guardar el rol en localstorage
           this.router.navigate(['/home']); // Redirección al home después de loguearse
         } else {
           console.error('Inicio de Sesión fallido', response);
