@@ -5,6 +5,7 @@
             <th>ID</th>
             <th>Nombre</th>
             <th>Apellidos</th>
+            <th>Username</th>
             <th>Acción</th>
         </tr>
     </thead>
@@ -14,6 +15,7 @@
             <td>{{recruiter.id}}</td>
             <td>{{recruiter.nombre}}</td>
             <td>{{recruiter.apellidos}}</td>
+            <td>{{recruiter.username}}</td>
             <td>
                 <button (click)="deleteRecruiter(recruiter.id)">Eliminar</button>
                 <a [routerLink]="['/recruiters/edit', recruiter.id]">Editar</a>
