@@ -1,0 +1,20 @@
+<h2>Gesel Recruiter & Cliente</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Recruiter ID</th>
+      <th>Cliente ID</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let relation of relations">
+      <td>{{ relation.recruiter.id }}</td>
+      <td>{{ relation.cliente.id }}</td>
+      <td>
+        <button (click)="deleteRelation(relation.recruiter.id, relation.cliente.id)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
