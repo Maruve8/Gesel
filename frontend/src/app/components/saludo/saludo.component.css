@@ -1,0 +1,9 @@
+p {
+    font-size: 25px;
+    padding-top: 50px;
+    padding-left: 15%;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #1791C8;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+}

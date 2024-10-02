@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { LogoutComponent } from '../components/logout/logout.component';
 import { AuthService } from '../services/auth.service';
 import { MenuComponent } from '../components/menu/menu.component';
+import { SaludoComponent } from '../components/saludo/saludo.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [LogoutComponent, MenuComponent],
+  imports: [LogoutComponent, MenuComponent, SaludoComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
