@@ -1,0 +1,90 @@
+
+.menu-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1791C8; /*fondo*/
+  padding: 10px;
+
+}
+
+.menu-container .logo {
+  margin-right: auto; /*margen izquierdo */
+}
+
+
+.menu-container a {
+  color: white; /*texto*/
+  text-decoration: none;
+  margin: 0 15px;
+  padding: 10px 15px; 
+  border-radius: 5px; 
+  transition: background-color 0.3s;
+}
+
+.menu-container a:hover {
+  background-color: rgba(255, 255, 255, 0.2); 
+}
+
+.menu-buttons {
+  display: flex; /*botones en fila*/
+  justify-content: center; /*centrados en contenedor*/
+  flex-grow: 1; /*contenedor creciente*/
+
+}
+
+.menu-buttons button {
+  margin: 0 10px; /*espacio entre botones */
+}
+
+
+
+.logo img {
+  height: 90px; /*altura logo*/
+  margin-right: 5px;
+  box-shadow: none !important;
+}
+
+
+
+.logout-button {
+  background-color: transparent; 
+  color: white; 
+  border: none; 
+  cursor: pointer; 
+  margin-left: 20px;
+  
+}
+
+
+.logout-button:hover {
+  text-decoration: underline; 
+}
+
+.btn-primary {
+  background-color: #E2F1F8;
+  color: #1791C8;
+  border-color: #1791C8;
+}
+
+.btn-primary:hover {
+  background-color: #1791C8;
+  color: #E2F1F8;
+  border-color: #E2F1F8;
+}
+
+.btn-outline-primary {
+  color: #E2F1F8;
+  border-color: #E2F1F8;
+  border-radius: 50%;
+  
+}
+
+
+.btn-outline-primary:hover {
+  background-color: #E2F1F8;
+  color: #1791C8;
+}
+
+
+

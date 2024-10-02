@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';  // importar CommonModule para usar ngFor
 import { FormsModule } from '@angular/forms';
 
+
+
 @Component({
   selector: 'app-candidato-list',
   standalone: true,
