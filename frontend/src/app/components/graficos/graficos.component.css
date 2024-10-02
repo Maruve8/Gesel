@@ -1,0 +1,16 @@
+.graficos-container {
+    display: flex;               
+    flex-wrap: wrap;            
+    justify-content: center;     
+    align-items: flex-start;         
+    margin: 20px;               
+}
+
+canvas {
+    margin: 10px;  
+    width: 400px;               
+    height: 300px;             
+                
+    flex: 0 0 calc(50% - 20px);
+    box-sizing: border-box;            
+}
