@@ -1,16 +1,34 @@
 .graficos-container {
-    display: flex;               
-    flex-wrap: wrap;            
-    justify-content: center;     
-    align-items: flex-start;         
-    margin: 20px;               
+    display: grid;  
+    grid-template-columns: repeat(2, 1fr);     
+    gap: 110px;       
+    justify-items: center;
+    margin: 60px; 
+    width: 40%;
+    padding: 20px;
+    
+               
 }
 
 canvas {
-    margin: 10px;  
-    width: 400px;               
-    height: 300px;             
-                
-    flex: 0 0 calc(50% - 20px);
-    box-sizing: border-box;            
+    
+    width: 100%;               
+    height: auto;               
+    max-height: 250px;            
+    
+    box-sizing: border-box; 
+    
+    margin-left: 50px;  
+    margin-bottom: 20px;  
 }
+
+
+
+
+@media (max-width: 600px) {
+    .graficos-container {
+        grid-template-columns: 1fr; /*sólo una columna en pantallas pequeñas*/
+    }
+}
+
+
