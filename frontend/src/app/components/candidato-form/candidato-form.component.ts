@@ -72,8 +72,8 @@ saveCandidato(): void {
 
     this.candidatoService.uploadCandidato(formData).subscribe({
       next: (nuevoCandidato) => {
-        this.candidatoId = nuevoCandidato.id; // Actualizar el ID del candidato recién creado
-        this.asignarProceso(); // Llama al método que asigna el proceso
+        this.candidatoId = nuevoCandidato.id; //actualizar el id del candidato nuevo
+        this.asignarProceso(); //llama asignar porceso
       },
       error: (err) => {
         console.error('Error al subir el candidato', err);
@@ -83,7 +83,7 @@ saveCandidato(): void {
     if (this.isEditMode) {
       this.candidatoService.updateCandidato(this.candidatoId!, this.candidato).subscribe({
         next: () => {
-          this.asignarProceso(); // Llama al método que asigna el proceso después de actualizar
+          this.asignarProceso(); //después de actualizar, asignar proceso
         },
         error: (err) => {
           console.error('Error al actualizar candidato', err);
@@ -93,7 +93,7 @@ saveCandidato(): void {
       this.candidatoService.createCandidato(this.candidato).subscribe({
         next: (nuevoCandidato) => {
           this.candidatoId = nuevoCandidato.id;
-          this.asignarProceso(); // Llama al método que asigna el proceso después de crear el candidato
+          this.asignarProceso(); 
         },
         error: (err) => {
           console.error('Error al crear candidato', err);
@@ -104,24 +104,24 @@ saveCandidato(): void {
 }
 
 asignarProceso(): void {
-  // Si se selecciona un proceso, asociarlo al candidato
+  //si se selecciona un proceso, asociarlo al candidato
   if (this.procesoSeleccionado) {
     const procesoCandidato = {
-      candidatoId: this.candidatoId, // Usar el ID del candidato
-      procesoId: this.procesoSeleccionado ? this.procesoSeleccionado.id : null // Solo si hay proceso seleccionado
+      candidatoId: this.candidatoId, //utilizxar el id del candidato
+      procesoId: this.procesoSeleccionado ? this.procesoSeleccionado.id : null //sólo si se ha seleccionado un poroceso
     };
 
     this.procesoCandidatoService.asignarProceso(procesoCandidato).subscribe({
-      next: () => this.router.navigate(['/candidatos']), // Redirigir al éxito
+      next: () => this.router.navigate(['/candidatos']), //succes
       error: (err) => {
         console.error('Error al asignar proceso', err);
-        //this.router.navigate(['/candidatos']); // Redirigir incluso en caso de error
+        //this.router.navigate(['/candidatos']); //redirigir incluso en caso de error
         console.log(err.message);
         console.log(err.status);
       }
     });
   } else {
-    this.router.navigate(['/candidatos']); // Si no hay proceso, simplemente redirigir
+    this.router.navigate(['/candidatos']); //si no hay proceso, simplemente redirigir
   }
 }
 

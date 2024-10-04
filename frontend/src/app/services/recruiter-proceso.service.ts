@@ -26,5 +26,10 @@ export class RecruiterProcesoService {
     return this.http.delete(`${this.apiURL}/${recruiterId}/${procesoId}`);
   }
 
+
+  asignarRecruiter(recruiterProceso: any): Observable<any> {
+    return this.http.post<any>(`${this.apiURL}/asignarRecruiter`, recruiterProceso);
+  }
+
   
 }

@@ -27,4 +27,8 @@ public class RecruiterProcesoService {
 	public void deleteRelation(RecruiterProcesoId id) {
 		repository.deleteById(id);
 	}
+	
+	public RecruiterProceso asignarRecruiter(RecruiterProceso recruiterProceso) {
+	    return repository.save(recruiterProceso);
+	}
 }

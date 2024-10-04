@@ -40,6 +40,11 @@
         <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
     </select>
 
+    <label for="recruiter">Recruiter</label>
+    <select id="recruiter" [(ngModel)]="recruiterSeleccionado" name="recruiter">
+        <option *ngFor="let recruiter of recruiters" [ngValue]="recruiter">{{ recruiter.nombre }}</option>
+    </select>
+
     <button type="submit">
         {{isEditMode ? 'Guardar Cambios' : 'Nuevo Proceso'}}
     </button>

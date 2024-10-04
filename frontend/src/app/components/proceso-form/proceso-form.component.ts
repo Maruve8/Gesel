@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ProcesoService } from '../../services/proceso.service';
 import { ClienteService } from '../../services/cliente.service';
+import { RecruiterService } from '../../services/recruiter.service';
+import { RecruiterProcesoService } from '../../services/recruiter-proceso.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -16,6 +18,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './proceso-form.component.css'
 })
 export class ProcesoFormComponent implements OnInit{
+
+  recruiters: any[] = [];
+  recruiterSeleccionado: any = {};
+
 
   proceso: any = {
     titulo: '',
@@ -42,6 +48,8 @@ export class ProcesoFormComponent implements OnInit{
   constructor(
     private procesoService: ProcesoService,
     private clienteService: ClienteService, //para poder obtener los clientes
+    private recruiterService: RecruiterService, //para obtener los recruiter y poder asignarlo al proceso
+    private recruiterProcesoService: RecruiterProcesoService,
     private route: ActivatedRoute,
     private router: Router
   ){}
@@ -62,6 +70,11 @@ export class ProcesoFormComponent implements OnInit{
     this.clienteService.getClientes().subscribe((clientes: any[])=>{
       this.clientes=clientes;
     });
+
+    // Obtener la lista de recruiters
+    this.recruiterService.getRecruiters().subscribe(data => {
+      this.recruiters = data;
+  });
   }
 
 
@@ -90,10 +103,25 @@ export class ProcesoFormComponent implements OnInit{
         this.router.navigate(['/procesos']);
       });
     }else {
-      this.procesoService.createProceso(this.proceso).subscribe(()=>{
+      this.procesoService.createProceso(this.proceso).subscribe(nuevoProceso => {
+        this.procesoId = nuevoProceso.id; //obtener el id del nuevo proceso
+
+        //asignar recruiter si se selecciona
+      if (this.recruiterSeleccionado) {
+        const recruiterProceso = {
+          recruiterId: this.recruiterSeleccionado.id,
+          procesoId: this.procesoId
+        };
+
+        this.recruiterProcesoService.asignarRecruiter(recruiterProceso).subscribe({
+          next: () => this.router.navigate(['/procesos']),
+          error: (err) => console.error('Error al asignar recruiter', err)
+        });
+      } else {
         this.router.navigate(['/procesos']);
+      }
       });
-    }
+    } 
   }
   }
 
