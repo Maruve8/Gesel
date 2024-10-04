@@ -23,5 +23,10 @@ export class ProcesoCandidatoService {
     return this.http.delete(`${this.apiURL}/${procesoId}/${candidatoId}`)
   }
 
+  asignarProceso(procesoCandidato: any): Observable<any> {
+    return this.http.post<any>(`${this.apiURL}/asignarProceso`, procesoCandidato);
+  }
+  
+
 
 }

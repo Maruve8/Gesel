@@ -25,5 +25,12 @@ public class ProcesoCandidatoService {
     public void deleteRelation(ProcesoCandidatoId id){
         repository.deleteById(id);
     }
+    
+    public ProcesoCandidato asignarProceso(ProcesoCandidato procesoCandidato) {
+        if (procesoCandidato.getProceso() != null) {
+            return repository.save(procesoCandidato);
+        }
+        return null; // Si no hay proceso, no guardamos nada en la tabla intermedia.
+    }
 
 }

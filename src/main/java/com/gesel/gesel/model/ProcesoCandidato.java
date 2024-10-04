@@ -12,7 +12,7 @@ public class ProcesoCandidato {
 	
 	@ManyToOne
 	@MapsId("procesoId")
-	@JoinColumn(name="proceso_id")
+	@JoinColumn(name="proceso_id", nullable = true)
 	private Proceso proceso;
 	
 	
@@ -62,5 +62,15 @@ public class ProcesoCandidato {
 	public void setCandidato(Candidato candidato) {
 		this.candidato=candidato;
 	}
+	
+	//prueba, sobreescribo tostring para imprimir en consola logs con más info
+	@Override
+	public String toString() {
+	    return "ProcesoCandidato{" +
+	           "candidato=" + (candidato != null ? candidato.getId() : "null") +
+	           ", proceso=" + (proceso != null ? proceso.getId() : "null") +
+	           '}';
+	}
+
 
 }

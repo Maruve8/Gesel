@@ -11,6 +11,12 @@
     <label for="descripcion">Descripción</label>
     <input type="text" id="descripcion" [(ngModel)]="candidato.descripcion" name="descripcion">>
 
+    <label for="proceso">Proceso</label>
+        <select id="proceso" [(ngModel)]="procesoSeleccionado" name="proceso">
+            <option *ngFor="let proceso of procesos" [ngValue]="proceso">{{ proceso.titulo }}</option>
+        </select>
+
+      
     <label for="estado">Estado</label>
     <select id="estado" [(ngModel)]="candidato.estado" name="estado">
         <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
