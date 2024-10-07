@@ -14,9 +14,17 @@ public class RecruiterProcesoService {
 	@Autowired
 	private RecruiterProcesoRepository repository;
 	
+	
+	//obtener RecruiterProceso por procesoId
+	 public RecruiterProceso findRecruiterByProcesoId(Long procesoId) {
+	        return repository.findByProcesoId(procesoId).orElse(null);
+	    }
+	
 	public List<RecruiterProceso> getAllRelations(){
 		return repository.findAll();
 	}
+	
+	
 	
 	
 	public RecruiterProceso saveRelation(RecruiterProceso relation) {

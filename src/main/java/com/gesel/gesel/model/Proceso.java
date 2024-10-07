@@ -32,6 +32,12 @@ public class Proceso {
 	@JoinColumn(name= "cliente_id", nullable = false)
 	private Cliente cliente;
 	
+	
+	//agregao un campo para el nombre del recruiter sin modifcar estructura de bbdd, no persistente par alomacenar el nombre del recruiter asignado al proceso, solo lo utilizo en la lógica para poder utilizarlo en la vista
+	@Transient
+	private String recruiterNombre;
+	
+	
 	//constructor vacío
 	public Proceso() {
 		
@@ -132,4 +138,13 @@ public class Proceso {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	
+	//getter y setter recruiterNombre
+    public String getRecruiterNombre() {
+        return recruiterNombre;
+    }
+
+    public void setRecruiterNombre(String recruiterNombre) {
+        this.recruiterNombre = recruiterNombre;
+    }
 }

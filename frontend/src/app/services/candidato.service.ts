@@ -19,6 +19,11 @@ export class CandidatoService {
     return this.http.get<any>(`${this.apiURL}/${id}`, { withCredentials: true });
   }
 
+  //obtener candidato con el proceso asignado
+  getCandidatoConProceso(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiURL}/con-proceso/${id}`, { withCredentials: true });
+  }
+
   //nuevo candidato
   createCandidato(candidato: any): Observable<any>{
     return this.http.post<any>(this.apiURL, candidato, { withCredentials: true }); 

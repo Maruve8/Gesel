@@ -2,6 +2,7 @@ package com.gesel.gesel.service;
 
 import com.gesel.gesel.model.ProcesoCandidato;
 import com.gesel.gesel.model.ProcesoCandidatoId;
+import com.gesel.gesel.model.Proceso;
 import com.gesel.gesel.repository.ProcesoCandidatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,11 @@ public class ProcesoCandidatoService {
 	
 	@Autowired
     private ProcesoCandidatoRepository repository;
+	
+	public ProcesoCandidato findProcesoByCandidatoId(Long candidatoId) {
+	    
+	    return repository.findByCandidatoId(candidatoId).orElse(null);
+	}
 
 	
     public List<ProcesoCandidato> getAllRelations(){

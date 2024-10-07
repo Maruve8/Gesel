@@ -1,6 +1,7 @@
 package com.gesel.gesel.service;
 
 import com.gesel.gesel.model.Proceso;
+import com.gesel.gesel.model.RecruiterProceso;
 import com.gesel.gesel.repository.ProcesoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,14 +13,36 @@ public class ProcesoService {
 	@Autowired
 	private ProcesoRepository procesoRepository;
 	
+	@Autowired
+	private RecruiterProcesoService recruiterProcesoService; //necesito para obtener el recruiter asignado
+	
 	//listar todos los procesos
 	public List<Proceso> getAllProcesos(){
-		return procesoRepository.findAll();
-	}
+		List<Proceso> procesos=procesoRepository.findAll();
+		for(Proceso proceso:procesos) {
+			RecruiterProceso recruiterProceso=recruiterProcesoService.findRecruiterByProcesoId(proceso.getId());
+			if (recruiterProceso != null) {
+                proceso.setRecruiterNombre(recruiterProceso.getRecruiter().getNombre());
+            } else {
+                proceso.setRecruiterNombre("No asignado");
+            }
+        }
+        return procesos;
+    }
 	
 	//obtener proceso por id
 	public Proceso getProcesoById(Long id) {
-		return procesoRepository.findById(id).orElse(null);
+		Proceso proceso=procesoRepository.findById(id).orElse(null);
+		if(proceso!=null) {
+			RecruiterProceso recruiterProceso=recruiterProcesoService.findRecruiterByProcesoId(proceso.getId());
+			if(recruiterProceso!=null) {
+				proceso.setDescripcion(recruiterProceso.getRecruiter().getNombre());
+				
+			}else {
+				proceso.setDescripcion("No asignado");
+			}
+		}
+		return proceso;
 	}
 	
 	

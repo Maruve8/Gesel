@@ -8,6 +8,7 @@
             <th>Descripción</th>
             <th>Estado</th>
             <th>CV</th>
+            <th>Proceso</th>
             <th>Acción</th>
         </tr>
     </thead>
@@ -23,6 +24,7 @@
                 <a *ngIf="candidato.cvUrl" [href]="candidato.cvUrl" target="_blank">Ver CV</a>
                 <span *ngIf="!candidato.cvUrl">No disponible</span>
             </td>
+            <td>{{ candidato.descripcion || 'No asignado' }}</td><!--muestra si hay proceso asignado-->
             <td>
                 <button (click)="deleteCandidato(candidato.id)">Eliminar</button>
                 <a [routerLink]="['/candidatos/edit', candidato.id]">Editar</a>

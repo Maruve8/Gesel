@@ -11,6 +11,7 @@
             <th>Salario</th>
             <th>Cliente</th>
             <th>Estado</th>
+            <th>Recruiter</th>
             <th>Acción</th>
         </tr>
     </thead>
@@ -26,6 +27,7 @@
             <td>{{proceso.salario}}</td>
             <td>{{ proceso.cliente ? proceso.cliente.nombre : 'Sin Cliente' }}</td>
             <td>{{proceso.estado}}</td>
+            <td>{{proceso.recruiterNombre || 'No asignado'}}</td><!--columna recruiter--> 
             <td>
                 <button (click)="deleteProceso(proceso.id)">Eliminar</button>
                 <a [routerLink]="['/procesos/edit', proceso.id]">Editar</a>

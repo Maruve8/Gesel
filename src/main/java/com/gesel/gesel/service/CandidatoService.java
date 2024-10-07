@@ -1,7 +1,11 @@
 package com.gesel.gesel.service;
 
 import com.gesel.gesel.model.Candidato;
+import com.gesel.gesel.model.Proceso;
+import com.gesel.gesel.model.ProcesoCandidato;
 import com.gesel.gesel.repository.CandidatoRepository;
+import com.gesel.gesel.service.ProcesoCandidatoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
@@ -12,10 +16,45 @@ public class CandidatoService {
 	@Autowired
 	private CandidatoRepository candidatoRepository;
 	
+	@Autowired
+    private ProcesoCandidatoService procesoCandidatoService; //para obtener el proceso
+	
 	//listar candidatos
 	public List<Candidato> getAllCandidatos(){
-		return candidatoRepository.findAll();
+		List<Candidato> candidatos=candidatoRepository.findAll();
+		for(Candidato candidato:candidatos) {
+			ProcesoCandidato procesoCandidato=procesoCandidatoService.findProcesoByCandidatoId(candidato.getId());
+			if(procesoCandidato!=null) {
+				candidato.setDescripcion(procesoCandidato.getProceso().getTitulo());
+				
+			}else {
+				candidato.setDescripcion("No asignado");
+			}
+		}
+		return candidatos;
 	}
+	
+	//obtener candidato con el proceso asignado
+	public Candidato getCandidatoConProceso(Long id) {
+	    Candidato candidato=candidatoRepository.findById(id).orElse(null);
+	    
+	    if (candidato != null) {
+	        ProcesoCandidato procesoCandidato=procesoCandidatoService.findProcesoByCandidatoId(candidato.getId());
+	        if(procesoCandidato!=null) {
+	        	candidato.setDescripcion(procesoCandidato.getProceso().getTitulo());
+	        	
+	        }else {
+	        	candidato.setDescripcion("No asigando");
+	        }
+	        }
+	    
+	    return candidato;
+	}
+	
+	
+	
+	
+	
 	
 	//obtener candidato por id
 	public Candidato getCandidatoById(Long id) {
@@ -36,6 +75,12 @@ public class CandidatoService {
 			candidato.setDescripcion(candidatoDetails.getDescripcion());
 			candidato.setEstado(candidatoDetails.getEstado());
 			candidato.setCvUrl(candidatoDetails.getCvUrl());
+			
+			//si hay proceso asignado, se actualiza
+            ProcesoCandidato procesoCandidato = procesoCandidatoService.findProcesoByCandidatoId(candidato.getId());
+            if (procesoCandidato != null) {
+                candidato.setDescripcion(procesoCandidato.getProceso().getTitulo());
+            }
 			return candidatoRepository.save(candidato);
 		}
 		return null;
