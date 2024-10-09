@@ -66,7 +66,7 @@ public class Recruiter {
 		this.username=username;
 	}
 	
-	public String GetPassword() {
+	public String getPassword() {
 		return password;
 	}
 	

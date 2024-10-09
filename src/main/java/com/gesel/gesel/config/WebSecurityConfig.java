@@ -1,12 +1,19 @@
 package com.gesel.gesel.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -15,12 +22,24 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.core.Authentication;
+import com.gesel.gesel.repository.RecruiterRepository;
+
+
+import com.gesel.gesel.service.RecruiterService;
 
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
+	
+	private final RecruiterRepository recruiterRepository;
+
+	@Autowired
+    public WebSecurityConfig(RecruiterRepository recruiterRepository) {
+        this.recruiterRepository = recruiterRepository;
+    }
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -44,10 +63,10 @@ public class WebSecurityConfig {
                     .requestMatchers("/api/recruiter-cliente/**").permitAll()
                     .requestMatchers("/api/proceso-candidato/**").permitAll()
                  
-                .anyRequest().authenticated() // Requerir autenticación para el resto
+                .anyRequest().authenticated() //requerir autenticación para el resto
             )
             .formLogin(form -> form
-                .loginProcessingUrl("/api/login") // Procesar la autenticación aquí
+                .loginProcessingUrl("/api/login") //procesar la autenticación aquí
                 .permitAll()
             )
             .logout(logout -> logout
@@ -55,9 +74,79 @@ public class WebSecurityConfig {
                 .logoutSuccessHandler((request, response, authentication) -> response.setStatus(200))
                 .permitAll()
             );
+        
+        http.authenticationProvider(daoAuthenticationProvider());
 
         return http.build();
     }
+    
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService());
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
+    }
+    
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        DaoAuthenticationProvider daoAuthProvider = daoAuthenticationProvider();
+
+        InMemoryUserDetailsManager inMemoryManager = (InMemoryUserDetailsManager) userDetailsService();
+
+        return new ProviderManager(List.of(daoAuthProvider, new AuthenticationProvider() {
+            @Override
+            public Authentication authenticate(Authentication authentication) {
+                String username = authentication.getName();
+                String password = authentication.getCredentials().toString();
+
+                //carga primero de la memoria
+                try {
+                    UserDetails userDetails = inMemoryManager.loadUserByUsername(username);
+                    return new UsernamePasswordAuthenticationToken(username, password, userDetails.getAuthorities());
+                } catch (UsernameNotFoundException e) {
+                    //si no está en memoria, busca en bbdd
+                    return recruiterRepository.findByUsername(username)
+                        .map(recruiter -> new UsernamePasswordAuthenticationToken(
+                            recruiter.getUsername(),
+                            recruiter.getPassword(),
+                            List.of()
+                        )).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
+                }
+            }
+
+            @Override
+            public boolean supports(Class<?> authentication) {
+                return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
+            }
+        }));
+    }
+    
+    
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails user = User.builder()
+            .username("user")
+            .password(passwordEncoder().encode("password"))
+            .roles("USER")
+            .build();
+
+        UserDetails admin = User.builder()
+            .username("admin")
+            .password(passwordEncoder().encode("adminpassword"))
+            .roles("ADMIN")
+            .build();
+
+        return new InMemoryUserDetailsManager(user, admin);
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    
+    
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
@@ -71,26 +160,11 @@ public class WebSecurityConfig {
         return source;
     }
 
-    @Bean
-    UserDetailsService userDetailsService() {
-        UserDetails user = User.builder()
-                .username("user")
-                .password(passwordEncoder().encode("password"))
-                .roles("USER")
-                .build();
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("adminpassword")) 
-                .roles("ADMIN") 
-                .build();
+    
+    
+    
+    
 
-        return new InMemoryUserDetailsManager(user, admin);
-    }
-
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }
 
 
