@@ -50,4 +50,9 @@ public class RecruiterService{
 		recruiterRepository.deleteById(id);
 	}
 	
+	
+	public Recruiter getRecruiterByUsername(String username) {
+	    return recruiterRepository.findByUsername(username).orElse(null);
+	}
+	
 }
