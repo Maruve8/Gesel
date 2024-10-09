@@ -1,9 +1,21 @@
 .perfil-container {
     text-align: center;
+    padding-top: 30px;
+   
+  }
+
+
+  .perfil-info {
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
   
   .foto-container {
     margin-bottom: 20px;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+
   }
   
   .foto-placeholder {
@@ -16,6 +28,7 @@
     justify-content: center;
     font-size: 16px;
     margin: 0 auto;
+    transition: background-color 0.3s ease;
   }
   
   .foto-perfil {
@@ -25,22 +38,38 @@
     object-fit: cover;
     display: block;
     margin: 0 auto;
+    transition: transform 0.3s ease;
   }
+
+
+  .foto-perfil:hover {
+    transform: scale(1.45);
+  }
+
+  .foto-container:hover .foto-placeholder {
+
+    background-color: #ddd;
+  }
+
+
   
   .input-file {
-    display: block;
-    margin: 10px auto;
+    display: none;
+    
   }
   
   .datos-container {
     display: flex;
     flex-direction: column;
+
     align-items: center;
+
   }
   
   .dato {
     margin: 10px 0;
   }
+
   
   .dato label {
     font-weight: bold;
@@ -52,5 +81,18 @@
     font-size: 18px;
     margin: 0;
   }
+
+
+  h2 {
+    color: #042a3b;
+  }
   
-  
+  label {
+
+    color: #042a3b;
+    
+  }
+
+  p {
+    color: #042a3b;
+  }

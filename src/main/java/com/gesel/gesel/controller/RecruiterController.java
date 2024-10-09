@@ -68,30 +68,34 @@ public class RecruiterController {
 	
 	//cargar foto de perfil
 	@PostMapping("/upload-photo/{id}")
-	public ResponseEntity<Map<String, String>> uploadPhoto(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+	public ResponseEntity<String> uploadPhoto(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
 
 	    // Validar si el archivo está vacío
 	    if (file.isEmpty()) {
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Archivo vacío"));
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Archivo vacío");
 	    }
 
 	    // Obtener al recruiter por id
 	    Recruiter recruiter = recruiterService.getRecruiterById(id);
 	    if (recruiter == null) {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Recruiter no encontrado"));
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recruiter no encontrado");
 	    }
 
 	    try {
 	        // Guardar el archivo en el servidor
 	        String fileName = saveFile(file);
+	        String fotoUrl = "/images/" + fileName; // Aquí definimos la URL donde se accederá la imagen
 
-	        // Devolver la URL de la foto guardada como respuesta
-	        String fotoUrl = "http://localhost:8080/images/" + fileName;
-	        return ResponseEntity.ok(Map.of("fotoUrl", fotoUrl));
+	        // Actualizar la URL de la imagen en la base de datos
+	        recruiter.setFotoUrl(fotoUrl);
+	        recruiterService.saveRecruiter(recruiter);
+
+	        return ResponseEntity.ok(fotoUrl);
 	    } catch (IOException e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Error al guardar la foto"));
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar la foto");
 	    }
 	}
+
 
 	//método auxiliar para guardar el archivo
 	private String saveFile(MultipartFile file) throws IOException {
@@ -104,6 +108,9 @@ public class RecruiterController {
 	    Files.copy(file.getInputStream(), filePath);
 	    return fileName;
 	}
+	
+	
+	
 
 	
 }

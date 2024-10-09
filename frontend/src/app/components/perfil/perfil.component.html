@@ -2,14 +2,18 @@
     <h2>Mi Perfil</h2>
   
     <div class="perfil-info">
-      <div class="foto-container">
+      <div class="foto-container" (click)="triggerFileInput()">
         <img *ngIf="recruiter.fotoUrl; else defaultPhoto" [src]="recruiter.fotoUrl" class="foto-perfil">
         <ng-template #defaultPhoto>
           <div class="foto-placeholder">Subir Foto</div>
         </ng-template>
-        <input type="file" (change)="onFileSelected($event)" class="input-file" />
+        <input type="file" (change)="onFileSelected($event)" class="input-file" #fileInput hidden/>
       </div>
   
+
+      
+
+
       <div class="datos-container">
         <div class="dato">
           <label>Nombre:</label>

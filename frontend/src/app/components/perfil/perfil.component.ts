@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { firstValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-perfil',
@@ -25,14 +25,7 @@ export class PerfilComponent implements OnInit{
     if (!username || username === 'user' || username === 'admin') {
       this.router.navigate(['/home']);  //redirige al home para usuarios en memoria
     } else {
-      //carga la info del recruiter desde la bbdd
-      firstValueFrom(this.http.get(`/api/recruiters/username/${username}`))
-        .then((response: any) => {
-          this.recruiter = response;
-        })
-        .catch((error) => {
-          console.error('Error al cargar el perfil', error);
-        });
+      this.cargarPerfil(); 
     }
   }
   
@@ -45,10 +38,9 @@ cargarPerfil(): void {
     next: (data: any) => {
       this.recruiter = data;
 
-      // Recuperar la URL de la foto desde el localStorage
-      const savedFotoUrl = localStorage.getItem(`${this.recruiter.id}-fotoUrl`);
-      if (savedFotoUrl) {
-        this.recruiter.fotoUrl = savedFotoUrl;  // Si hay foto guardada, la asignamos
+      // Recuperar la URL de la foto desde la bbdd
+      if (this.recruiter.fotoUrl) {
+        this.recruiter.fotoUrl = `http://localhost:8080${this.recruiter.fotoUrl}`;
       }
     },
     error: (error) => {
@@ -58,7 +50,7 @@ cargarPerfil(): void {
 }
 
 
-//cargar foto
+//cargar foto y subirla al servidor
 async onFileSelected(event: any): Promise<void> {
   const file: File = event.target.files[0];
   if (file) {
@@ -66,13 +58,13 @@ async onFileSelected(event: any): Promise<void> {
     formData.append('file', file);
 
     try {
-      const response: any = await firstValueFrom(
+      const response: any = await lastValueFrom(
         this.http.post(`/api/recruiters/upload-photo/${this.recruiter.id}`, formData)
       );
       
       
       if (response && response.fotoUrl) {
-        this.recruiter.fotoUrl = response.fotoUrl;  //actualiza la URL de la foto
+        this.recruiter.fotoUrl = `http://localhost:8080${response.fotoUrl}`;  //actualiza la URL de la foto
       } else {
         console.error('No se encontró la URL de la foto en la respuesta', response);
       }
@@ -81,6 +73,15 @@ async onFileSelected(event: any): Promise<void> {
     }
   }
 }
+
+
+
+//disparar el click en el input cuando haga click en el círculo de la foto
+triggerFileInput(): void {
+  const fileInput = document.querySelector('.input-file') as HTMLInputElement;
+  fileInput?.click();
+}
+
 
   
   

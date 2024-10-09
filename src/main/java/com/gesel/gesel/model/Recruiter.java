@@ -21,6 +21,10 @@ public class Recruiter {
 	
 	private String password;
 	
+	
+	//actualizaco con la imegen del perfil
+	private String fotoUrl;
+	
 	//constructor
 	public Recruiter() {
 		
@@ -74,6 +78,13 @@ public class Recruiter {
 		this.password=password;
 	}
 	
-
+	
+	public String getFotoUrl() {
+		return fotoUrl;
+	}
+	
+	public void setFotoUrl(String fotoUrl) {
+		this.fotoUrl=fotoUrl;
+	}
 
 }
