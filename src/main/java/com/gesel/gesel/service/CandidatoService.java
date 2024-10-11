@@ -21,35 +21,33 @@ public class CandidatoService {
 	
 	//listar candidatos
 	public List<Candidato> getAllCandidatos(){
-		List<Candidato> candidatos=candidatoRepository.findAll();
-		for(Candidato candidato:candidatos) {
-			ProcesoCandidato procesoCandidato=procesoCandidatoService.findProcesoByCandidatoId(candidato.getId());
-			if(procesoCandidato!=null) {
-				candidato.setDescripcion(procesoCandidato.getProceso().getTitulo());
-				
-			}else {
-				candidato.setDescripcion("No asignado");
-			}
-		}
-		return candidatos;
-	}
-	
-	//obtener candidato con el proceso asignado
-	public Candidato getCandidatoConProceso(Long id) {
-	    Candidato candidato=candidatoRepository.findById(id).orElse(null);
-	    
-	    if (candidato != null) {
-	        ProcesoCandidato procesoCandidato=procesoCandidatoService.findProcesoByCandidatoId(candidato.getId());
-	        if(procesoCandidato!=null) {
-	        	candidato.setDescripcion(procesoCandidato.getProceso().getTitulo());
-	        	
-	        }else {
-	        	candidato.setDescripcion("No asigando");
-	        }
-	        }
-	    
-	    return candidato;
-	}
+        List<Candidato> candidatos = candidatoRepository.findAll();
+        for(Candidato candidato : candidatos) {
+            ProcesoCandidato procesoCandidato = procesoCandidatoService.findProcesosByCandidatoId(candidato.getId()).stream().findFirst().orElse(null);
+            if(procesoCandidato != null) {
+                candidato.setDescripcion(procesoCandidato.getProceso().getTitulo());
+            } else {
+                candidato.setDescripcion("No asignado");
+            }
+        }
+        return candidatos;
+    }
+    
+    // Obtener un candidato con su proceso asignado
+    public Candidato getCandidatoConProceso(Long id) {
+        Candidato candidato = candidatoRepository.findById(id).orElse(null);
+        
+        if (candidato != null) {
+            ProcesoCandidato procesoCandidato = procesoCandidatoService.findProcesosByCandidatoId(candidato.getId()).stream().findFirst().orElse(null);
+            if(procesoCandidato != null) {
+                candidato.setDescripcion(procesoCandidato.getProceso().getTitulo());
+            } else {
+                candidato.setDescripcion("No asignado");
+            }
+        }
+        
+        return candidato;
+    }
 	
 	
 	
@@ -68,25 +66,22 @@ public class CandidatoService {
 	
 	//actualizar
 	public Candidato updateCandidato(Long id, Candidato candidatoDetails) {
-		Candidato candidato = candidatoRepository.findById(id).orElse(null);
-		if (candidato != null) {
-			candidato.setNombre(candidatoDetails.getNombre());
-			candidato.setApellidos(candidatoDetails.getApellidos());
-			candidato.setDescripcion(candidatoDetails.getDescripcion());
-			candidato.setEstado(candidatoDetails.getEstado());
-			candidato.setCvUrl(candidatoDetails.getCvUrl());
-			
-			//si hay proceso asignado, se actualiza
-            ProcesoCandidato procesoCandidato = procesoCandidatoService.findProcesoByCandidatoId(candidato.getId());
+        Candidato candidato = candidatoRepository.findById(id).orElse(null);
+        if (candidato != null) {
+            candidato.setNombre(candidatoDetails.getNombre());
+            candidato.setApellidos(candidatoDetails.getApellidos());
+            candidato.setDescripcion(candidatoDetails.getDescripcion());
+            candidato.setEstado(candidatoDetails.getEstado());
+            candidato.setCvUrl(candidatoDetails.getCvUrl());
+            
+            ProcesoCandidato procesoCandidato = procesoCandidatoService.findProcesosByCandidatoId(candidato.getId()).stream().findFirst().orElse(null);
             if (procesoCandidato != null) {
                 candidato.setDescripcion(procesoCandidato.getProceso().getTitulo());
             }
-			return candidatoRepository.save(candidato);
-		}
-		return null;
-		
-		
-	}
+            return candidatoRepository.save(candidato);
+        }
+        return null;
+    }
 	
 	//eliminar
 	public void deleteCandidato(Long id) {

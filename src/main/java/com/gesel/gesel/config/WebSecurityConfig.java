@@ -62,8 +62,10 @@ public class WebSecurityConfig {
                     .requestMatchers("/api/recruiter-entrevista/**").permitAll()
                     .requestMatchers("/api/recruiter-cliente/**").permitAll()
                     .requestMatchers("/api/proceso-candidato/**").permitAll()
+                    .requestMatchers("/api/entrevistas/**").permitAll()
                  
                 .anyRequest().authenticated() //requerir autenticación para el resto
+                    
             )
             .formLogin(form -> form
                 .loginProcessingUrl("/api/login") //procesar la autenticación aquí

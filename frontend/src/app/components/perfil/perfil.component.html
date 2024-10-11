@@ -1,37 +1,38 @@
 <div class="perfil-container">
-    <h2>Mi Perfil</h2>
-  
-    <div class="perfil-info">
-      <div class="foto-container" (click)="triggerFileInput()">
-        <img *ngIf="recruiter.fotoUrl; else defaultPhoto" [src]="recruiter.fotoUrl" class="foto-perfil">
-        <ng-template #defaultPhoto>
-          <div class="foto-placeholder">Subir Foto</div>
-        </ng-template>
-        <input type="file" (change)="onFileSelected($event)" class="input-file" #fileInput hidden/>
+  <h2>Mi Perfil</h2>
+
+  <div class="perfil-info">
+    <div class="foto-container" (click)="triggerFileInput()">
+      <img *ngIf="recruiter.fotoUrl; else defaultPhoto" [src]="recruiter.fotoUrl" class="foto-perfil">
+      <ng-template #defaultPhoto>
+        <div class="foto-placeholder">Subir Foto</div>
+      </ng-template>
+      <input type="file" (change)="onFileSelected($event)" class="input-file" #fileInput hidden/>
+    </div>
+
+
+    
+
+
+    <div class="datos-container">
+      <div class="dato">
+        <label>Nombre:</label>
+        <p>{{ recruiter.nombre }}</p>
       </div>
-  
 
-      
+      <div class="dato">
+        <label>Apellidos:</label>
+        <p>{{ recruiter.apellidos }}</p>
+      </div>
 
-
-      <div class="datos-container">
-        <div class="dato">
-          <label>Nombre:</label>
-          <p>{{ recruiter.nombre }}</p>
-        </div>
-  
-        <div class="dato">
-          <label>Apellidos:</label>
-          <p>{{ recruiter.apellidos }}</p>
-        </div>
-  
-        <div class="dato">
-          <label>Alias:</label>
-          <p>{{ recruiter.username }}</p>
-        </div>
+      <div class="dato">
+        <label>Alias:</label>
+        <p>{{ recruiter.username }}</p>
       </div>
     </div>
   </div>
+</div>
+  
   
   
   

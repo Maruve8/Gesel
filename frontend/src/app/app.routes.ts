@@ -18,6 +18,7 @@ import { RecruiterClienteListComponent } from './components/recruiter-cliente-li
 import { ProcesoCandidatoListComponent } from './components/proceso-candidato-list/proceso-candidato-list.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { CalendarioComponent } from './components/calendario/calendario.component';
 
 
 
@@ -46,6 +47,7 @@ export const routes: Routes = [
     { path: 'proceso-candidato', component: ProcesoCandidatoListComponent},
     { path: 'logout', component: LogoutComponent },
     { path: 'perfil', component: PerfilComponent }, 
+    { path: 'calendario', component: CalendarioComponent},
     { path: '', redirectTo: '/login', pathMatch: 'full' },  // ruta por defecto
     { path: '**', redirectTo: '/login', pathMatch: 'full' } //para rutas no existentes
 ];

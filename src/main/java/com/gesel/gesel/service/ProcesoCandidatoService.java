@@ -14,10 +14,9 @@ public class ProcesoCandidatoService {
 	@Autowired
     private ProcesoCandidatoRepository repository;
 	
-	public ProcesoCandidato findProcesoByCandidatoId(Long candidatoId) {
-	    
-	    return repository.findByCandidatoId(candidatoId).orElse(null);
-	}
+	public List<ProcesoCandidato> findProcesosByCandidatoId(Long candidatoId) {
+        return repository.findByCandidatoId(candidatoId);
+    }
 
 	
     public List<ProcesoCandidato> getAllRelations(){

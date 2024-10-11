@@ -32,6 +32,13 @@ public class ProcesoCandidatoController {
     public List<ProcesoCandidato> getAllRelations(){
         return service.getAllRelations();
     }
+    
+    
+    //get los procesos por id del candidato
+    @GetMapping("/candidato/{candidatoId}")
+    public List<ProcesoCandidato> getProcesosByCandidatoId(@PathVariable Long candidatoId) {
+        return service.findProcesosByCandidatoId(candidatoId);
+    }
 
     @PostMapping
     public ProcesoCandidato createRelation(@RequestBody ProcesoCandidato relation){

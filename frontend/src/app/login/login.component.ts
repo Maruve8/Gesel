@@ -31,7 +31,17 @@ export class LoginComponent {
           const userRole = this.username === 'admin' ? 'ADMIN' : 'USER'; //establecer el rol 
           localStorage.setItem('userRole', userRole); //guardar el rol en localstorage
           localStorage.setItem('username', this.username); //guarda el username
-          this.router.navigate(['/home']); // Redirección al home después de loguearse
+          
+          //solicitud para obtener los detalles del recruiter
+          this.http.get(`/api/recruiters/username/${this.username}`).subscribe({
+            next: (recruiterData: any) => {
+              localStorage.setItem('id', recruiterData.id); //guardar el id del recruiter en el localStorage
+              this.router.navigate(['/home']); //redirección al home después de loguearse
+            },
+            error: (error) => {
+              console.error('Error al obtener los detalles del recruiter', error);
+            }
+          });
         } else {
           console.error('Inicio de Sesión fallido', response);
         }
@@ -44,6 +54,8 @@ export class LoginComponent {
       }
     });
   }
+
+
 }
 
 

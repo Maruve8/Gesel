@@ -1,0 +1,45 @@
+<div id="calendar-container">
+<full-calendar [options]="calendarOptions"></full-calendar>
+</div>
+
+<div *ngIf="mostrarFormulario">
+    <h3>Crear Entrevista el {{ fechaSeleccionada }}</h3>
+    <form (submit)="crearEntrevista()">
+      <label for="hora">Hora:</label>
+      <input type="time" [(ngModel)]="hora" name="hora" required />
+  
+      <label for="ubicacion">Ubicación:</label>
+      <input type="text" [(ngModel)]="ubicacion" name="ubicacion" required />
+  
+      <label for="feedback">Feedback:</label>
+      <textarea [(ngModel)]="feedback" name="feedback"></textarea>
+
+      <label for="candidatoId">Candidato:</label>
+<select [(ngModel)]="candidatoId" (change)="actualizarProcesoSegunCandidato()" name="candidatoId" required>
+  <option value="" disabled selected>Selecciona un candidato</option>
+  <option *ngFor="let candidato of candidatos" [value]="candidato.id">
+    {{ candidato.nombre }}
+  </option>
+</select>
+
+
+<label for="procesoId">Proceso:</label>
+<select [(ngModel)]="procesoId" name="procesoId" required>
+  <option value="" disabled selected>Selecciona un proceso</option>
+  <option *ngFor="let proceso of procesos" [value]="proceso.id">
+    {{ proceso.titulo }}
+  </option>
+</select>
+
+    <label for="tipoEntrevista">Tipo de Entrevista:</label>
+    <select [(ngModel)]="tipoEntrevista" name="tipoEntrevista" required>
+      <option value="" disabled selected>Selecciona el tipo</option>
+      <!--enum -->
+      <option *ngFor="let tipo of tiposEntrevista" [value]="tipo">{{ tipo }}</option>
+    </select>
+  
+      <button type="submit">Confirmar</button>
+    </form>
+  </div>
+  
+

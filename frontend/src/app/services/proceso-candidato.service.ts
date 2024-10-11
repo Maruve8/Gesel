@@ -28,5 +28,10 @@ export class ProcesoCandidatoService {
   }
   
 
+  //obtener los procesos asignados a un candidato por su id
+  getProcesosByCandidatoId(candidatoId: number): Observable<any[]>{
+    return this.http.get<any[]>(`${this.apiURL}/candidato/${candidatoId}`);
+  }
+
 
 }

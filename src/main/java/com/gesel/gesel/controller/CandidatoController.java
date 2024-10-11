@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 import com.gesel.gesel.model.Candidato;
+import com.gesel.gesel.repository.ProcesoCandidatoRepository;
 import com.gesel.gesel.service.CandidatoService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +27,9 @@ public class CandidatoController {
 	
 	@Autowired
 	private CandidatoService candidatoService;
+	
+	@Autowired
+    private ProcesoCandidatoRepository procesoCandidatoRepository;
 	
 	@GetMapping
 	public List <Candidato> getAllCandidatos(){
@@ -96,6 +100,14 @@ public class CandidatoController {
 
 	    return filePath.toString(); 
 	}
+	
+	//obtengo candidatos con proceso asignado
+	@GetMapping("/con-proceso")
+    public ResponseEntity<List<Candidato>> getCandidatosConProceso(){
+        List<Candidato> candidatosConProceso=procesoCandidatoRepository.findCandidatosConProceso();
+        return ResponseEntity.ok(candidatosConProceso);
+        
+    }
 
 
 }
