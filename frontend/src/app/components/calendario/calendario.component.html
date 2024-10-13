@@ -2,44 +2,104 @@
 <full-calendar [options]="calendarOptions"></full-calendar>
 </div>
 
-<div *ngIf="mostrarFormulario">
-    <h3>Crear Entrevista el {{ fechaSeleccionada }}</h3>
+<div *ngIf="mostrarFormulario" class="card mt-4 p-4 shadow-sm">
+  <h4 class="card-title text-center">Crear Entrevista el {{ fechaSeleccionada }}</h4>
+  <div class="card-body">
     <form (submit)="crearEntrevista()">
-      <label for="hora">Hora:</label>
-      <input type="time" [(ngModel)]="hora" name="hora" required />
-  
-      <label for="ubicacion">Ubicación:</label>
-      <input type="text" [(ngModel)]="ubicacion" name="ubicacion" required />
-  
-      <label for="feedback">Feedback:</label>
-      <textarea [(ngModel)]="feedback" name="feedback"></textarea>
-
-      <label for="candidatoId">Candidato:</label>
-<select [(ngModel)]="candidatoId" (change)="actualizarProcesoSegunCandidato()" name="candidatoId" required>
-  <option value="" disabled selected>Selecciona un candidato</option>
-  <option *ngFor="let candidato of candidatos" [value]="candidato.id">
-    {{ candidato.nombre }}
-  </option>
-</select>
+      <div class="form-group row mb-3">
+        <label for="hora" class="col-sm-2 col-form-label">Hora:</label>
+        <div class="col-sm-10">
+          <input type="time" class="form-control" id="hora" [(ngModel)]="hora" name="hora" required />
+        </div>
+      </div>
 
 
-<label for="procesoId">Proceso:</label>
-<select [(ngModel)]="procesoId" name="procesoId" required>
-  <option value="" disabled selected>Selecciona un proceso</option>
-  <option *ngFor="let proceso of procesos" [value]="proceso.id">
-    {{ proceso.titulo }}
-  </option>
-</select>
+      <div class="form-group row mb-3">
+        <label for="ubicacion" class="col-sm-2 col-form-label">Ubicación:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="ubicacion" [(ngModel)]="ubicacion" name="ubicacion" required />
+        </div>
+      </div>
 
-    <label for="tipoEntrevista">Tipo de Entrevista:</label>
-    <select [(ngModel)]="tipoEntrevista" name="tipoEntrevista" required>
-      <option value="" disabled selected>Selecciona el tipo</option>
-      <!--enum -->
-      <option *ngFor="let tipo of tiposEntrevista" [value]="tipo">{{ tipo }}</option>
-    </select>
-  
-      <button type="submit">Confirmar</button>
+
+      <div class="form-group row mb-3">
+        <label for="feedback" class="col-sm-2 col-form-label">Feedback:</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" id="feedback" [(ngModel)]="feedback" name="feedback"></textarea>
+        </div>
+      </div>
+
+
+      <div class="form-group row mb-3">
+        <label for="candidatoId" class="col-sm-2 col-form-label">Candidato:</label>
+        <div class="col-sm-10">
+          <select class="form-select" id="candidatoId" [(ngModel)]="candidatoId" (change)="actualizarProcesoSegunCandidato()" name="candidatoId" required>
+            <option value="" disabled selected>Selecciona un candidato</option>
+            <option *ngFor="let candidato of candidatos" [value]="candidato.id">
+              {{ candidato.nombre }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+
+      <div class="form-group row mb-3">
+        <label for="procesoId" class="col-sm-2 col-form-label">Proceso:</label>
+        <div class="col-sm-10">
+          <select class="form-select" id="procesoId" [(ngModel)]="procesoId" name="procesoId" required>
+            <option value="" disabled selected>Selecciona un proceso</option>
+            <option *ngFor="let proceso of procesos" [value]="proceso.id">
+              {{ proceso.titulo }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+
+      <div class="form-group row mb-3">
+        <label for="tipoEntrevista" class="col-sm-2 col-form-label">Tipo de Entrevista:</label>
+        <div class="col-sm-10">
+          <select class="form-select" id="tipoEntrevista" [(ngModel)]="tipoEntrevista" name="tipoEntrevista" required>
+            <option value="" disabled selected>Selecciona el tipo</option>
+            <option *ngFor="let tipo of tiposEntrevista" [value]="tipo">{{ tipo }}</option>
+          </select>
+        </div>
+      </div>
+
+
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="submit" class="btn btn-primary">Confirmar</button>
+      </div>
     </form>
   </div>
-  
+</div>
 
+
+
+
+  <!--modal detalles entrevista al hacer click en entrevista del calendario-->
+  <div class="modal fade" id="modalDetallesEntrevista" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">Detalles de la Entrevista</h5>
+          <button type="button" class="btn-close" (click)="cerrarModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Fecha:</strong> {{ detallesEntrevista.fecha }}</p>
+          <p><strong>Hora:</strong> {{ detallesEntrevista.hora }}</p>
+          <p><strong>Candidato:</strong> {{ detallesEntrevista.candidato }}</p>
+          <p><strong>Ubicación:</strong> {{ detallesEntrevista.ubicacion }}</p>
+          <p><strong>Feedback:</strong> {{ detallesEntrevista.feedback }}</p>
+          <p><strong>Tipo:</strong> {{ detallesEntrevista.tipo }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+ 

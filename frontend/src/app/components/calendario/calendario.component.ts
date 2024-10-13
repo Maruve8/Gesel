@@ -42,6 +42,11 @@ interface ProcesoCandidato {
   candidato: Candidato; 
 }
 
+declare var bootstrap: any;
+
+
+
+
 
 @Component({
   selector: 'app-calendario',
@@ -78,6 +83,8 @@ export class CalendarioComponent implements OnInit{
   //enum TipoEntrevista 
   tiposEntrevista = ['RECRUITER', 'CLIENTE', 'PROYECTO'];
 
+  detallesEntrevista: any = {};//variable detalles entrevista
+
 
   constructor(private http: HttpClient, private procesoCandidatoService: ProcesoCandidatoService, private cdRef: ChangeDetectorRef) {
 
@@ -91,6 +98,7 @@ export class CalendarioComponent implements OnInit{
       weekends: false, //sólo weekdays
       editable: true,
       dateClick: this.handleDateClick.bind(this),
+      eventClick: this.handleEventClick.bind(this),//click entrevista en calendario
       locales: [esLocale], //agrega idiomas
       locale: 'es', //especifico español
     };
@@ -115,15 +123,25 @@ export class CalendarioComponent implements OnInit{
   }
 
 
+
+
+
   //método cargar entevistas
   cargarEntrevistas(recruiterId: string): void {
     this.http.get(`/api/entrevistas/recruiters/${recruiterId}/entrevistas`).subscribe({
       next: (response: any) => {
         const entrevistas: any[] = response;  //importante response es array
         this.calendarOptions.events = entrevistas.map(entrevista => ({
-          title: 'Entrevista',
+          title: `Entrevista ${entrevista.candidato || 'Candidato no disponible'}`,
           start: `${entrevista.fecha}T${entrevista.hora}`, //combina fecha y hora
           end: `${entrevista.fecha}T${entrevista.hora}`,  
+          extendedProps: {
+            candidato: entrevista.candidato || 'Candidato no disponible',
+            proceso: entrevista.proceso || 'Proceso no disponible',
+            ubicacion: entrevista.ubicacion || 'Ubicación no disponible',
+            feedback: entrevista.feedback || 'Sin feedback',
+            tipo: entrevista.tipo || 'Sin tipo'
+          }
         }));
         console.log('Entrevistas cargadas: ', this.calendarOptions.events);
 
@@ -191,11 +209,72 @@ export class CalendarioComponent implements OnInit{
 
   //click en fecha
   handleDateClick(info: DateClickArg){
-    const fechaSeleccionada=info.dateStr; //obtener fecha que se ha seleccionado
+    const fechaSeleccionada = new Date(info.dateStr);//string en date
+    const fechaFormateada = fechaSeleccionada.toLocaleDateString('es-ES');
+    const horaFormateada = fechaSeleccionada.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
     console.log('Fecha seleccionada: ', fechaSeleccionada);
-    this.fechaSeleccionada = fechaSeleccionada;
-    this.mostrarFormulario = true;
+    
+    this.fechaSeleccionada = `${fechaFormateada} ${horaFormateada}`;
+  this.hora = horaFormateada;
+  this.mostrarFormulario = true;
+
+    
+    
   }
+
+  
+  //formatear la hora
+  formatTime(date:Date):string{
+  const hours=date.getHours().toString().padStart(2, '0');
+  const minutes=date.getMinutes().toString().padStart(2, '0');
+  return `${hours}:${minutes}`;
+}
+
+
+//abrir modal con detalle entrevista cuando click en calendario
+handleEventClick(clickInfo:any){
+  const entrevista=clickInfo.event;//datos entrevista
+
+  console.log('Entrevista: ', entrevista);
+
+  //formato fehc ay horal del modal
+  const fechaObj = new Date(entrevista.startStr);
+  //modal con los detalles
+  this.mostrarDetallesEntrevista({
+    fecha: fechaObj.toLocaleDateString('es-ES'),
+    hora: fechaObj.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),  
+    candidato: entrevista.extendedProps?.candidato || 'Candidato no disponible',  
+    ubicacion: entrevista.extendedProps?.ubicacion || 'Ubicación no disponible',  
+    feedback: entrevista.extendedProps?.feedback || 'Sin feedback',
+    tipo: entrevista.extendedProps?.tipo || 'Sin tipo'
+  });
+}
+
+
+//método detalles entrevista
+mostrarDetallesEntrevista(entrevista:any){
+  this.detallesEntrevista = entrevista;
+
+  //modal
+  const modalElement = document.getElementById('modalDetallesEntrevista');
+  if (modalElement) {
+    const modal = new bootstrap.Modal(modalElement);  
+    modal.show();
+  }
+}
+
+
+//cerra modal con detalles entrevista
+cerrarModal(){
+  const modalElement=document.getElementById('modalDetallesEntrevista');
+  if (modalElement){
+    const modal = bootstrap.Modal.getInstance(modalElement); 
+    if (modal) {
+      modal.hide();
+    }
+  }
+}
+
 
 
 
@@ -240,31 +319,28 @@ export class CalendarioComponent implements OnInit{
 
         console.log('Entrevista creada', response);
 
-
-        //añadir nueva entrevista directamente al calendario
-        this.calendarOptions.events = [
-          ...this.calendarOptions.events as any[],
-          {
-            title: 'Entrevista',
-            start: `${nuevaEntrevista.fecha}T${nuevaEntrevista.hora}`,
-            end: `${nuevaEntrevista.fecha}T${nuevaEntrevista.hora}`,
-          }
-        ];
-
-        //actualizar calendario
-        this.cdRef.detectChanges();
-        this.mostrarFormulario = false; //una vez se crea, se cierra el formulario
-      },
-      error: (error) => {
-        console.error('Error al crear la entrevista', error);
-      }
-    });
-
-    
-
-  }
+       
+        
 
 
+        //refrescar todas las entrevistas desde el backend
+        this.cargarEntrevistas(this.recruiterId || '');
+
+      //limpiar el form
+      this.hora = '';
+      this.ubicacion = '';
+      this.feedback = '';
+      this.candidatoId = null;
+      this.procesoId = null;
+      this.tipoEntrevista = '';
+
+      this.mostrarFormulario = false; //fuera form una vez creada entrevista
+    },
+    error: (error) => {
+      console.error('Error al crear la entrevista', error);
+    }
+  });
+}
   
   
 

@@ -14,6 +14,7 @@ import com.gesel.gesel.model.Entrevista;
 import com.gesel.gesel.model.Proceso;
 import com.gesel.gesel.service.EntrevistaService;
 import com.gesel.gesel.model.Recruiter;
+import com.gesel.gesel.model.TipoEntrevista;
 import com.gesel.gesel.service.RecruiterEntrevistaService;
 import com.gesel.gesel.repository.CandidatoRepository;
 import com.gesel.gesel.repository.ProcesoRepository;
@@ -80,6 +81,12 @@ public class EntrevistaController {
 	    entrevista.setHora(LocalTime.parse(entrevistaData.get("hora").toString()));
 	    entrevista.setUbicacion(entrevistaData.get("ubicacion").toString());
 	    entrevista.setFeedback(entrevistaData.get("feedback").toString());
+	    
+	    //tengo que convertir la cadena de entrevista a Enum
+	    String tipoEntrevistaStr = entrevistaData.get("tipo").toString();
+	    TipoEntrevista tipoEntrevista = TipoEntrevista.valueOf(tipoEntrevistaStr.toUpperCase()); 
+	    entrevista.setTipo(tipoEntrevista);//se asigna el enum a la entrevista 
+	    
 	    entrevista.setCandidato(candidato); //se asigan el candidato
 	    entrevista.setProceso(proceso); //se asigna el proceso
 
@@ -95,13 +102,31 @@ public class EntrevistaController {
 	
 	//obtener las entrevistas asignadas a un recruiter
 	@GetMapping("/recruiters/{recruiterId}/entrevistas")
-	public ResponseEntity<List<Entrevista>> getEntrevistasByRecruiter(@PathVariable Long recruiterId) {
+	public ResponseEntity<List<Map<String, Object>>> getEntrevistasByRecruiter(@PathVariable Long recruiterId) {
 	    Recruiter recruiter = recruiterRepository.findById(recruiterId)
 	            .orElseThrow(() -> new RuntimeException("Recruiter no encontrado"));
 	    
 	    List<Entrevista> entrevistas = recruiterEntrevistaService.findEntrevistasByRecruiter(recruiter);
 	    
-	    return ResponseEntity.ok(entrevistas);
+	    //respuesta personalizada
+	    List<Map<String, Object>> entrevistasDetalladas = new ArrayList<>();
+	    
+	    for (Entrevista entrevista : entrevistas) {
+	        Map<String, Object> detallesEntrevista = new HashMap<>();
+	        detallesEntrevista.put("fecha", entrevista.getFecha());
+	        detallesEntrevista.put("hora", entrevista.getHora());
+	        detallesEntrevista.put("ubicacion", entrevista.getUbicacion());
+	        detallesEntrevista.put("feedback", entrevista.getFeedback());
+	        detallesEntrevista.put("tipo", entrevista.getTipo());
+	        
+	      
+	        detallesEntrevista.put("candidato", entrevista.getCandidato() != null ? entrevista.getCandidato().getNombre() : null);
+	        detallesEntrevista.put("proceso", entrevista.getProceso() != null ? entrevista.getProceso().getTitulo() : null);
+	        
+	        entrevistasDetalladas.add(detallesEntrevista);
+	    }
+	    
+	    return ResponseEntity.ok(entrevistasDetalladas);
 	}
 	
 	

@@ -79,5 +79,141 @@
   }
 
 
+  /*------------------------------------------------------------------*/
+  /*ESTILOS DEL MODAL CON DETALLES DE LA ENTREVISTA:*/
 
-  
+  #modalDetallesEntrevista .modal-header {
+
+    background-color: #1791C8; 
+    color: white; 
+    font-weight: bold;
+
+}
+
+#modalDetallesEntrevista .modal-body {
+    padding: 20px;
+    font-size: 16px;
+    color: #333; 
+
+}
+
+#modalDetallesEntrevista .modal-footer {
+    border-top: none; 
+    justify-content: center; 
+
+}
+
+#modalDetallesEntrevista .btn-close {
+    background-color: transparent;
+    border: none;
+    color: white; 
+
+}
+
+#modalDetallesEntrevista .btn {
+
+    background-color: #1791C8; 
+    color: white;
+}
+
+
+#modalDetallesEntrevista .btn:hover {
+
+  background-color: white; 
+  color: #1791C8;
+  border-color: #1791C8;
+  border-style: solid;
+}
+
+
+
+#modalDetallesEntrevista .modal-content {
+    border-radius: 10px; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
+}
+
+
+
+
+
+
+  /*---------------------------------------------------*/
+  /*ESTILOS FORMULARIO CREACIÓN DE ENTREVISTAS:*/
+
+  .card {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1791C8;
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    font-weight: bold;
+    color: #495057;
+  }
+
+  .form-control,
+.form-select {
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+
+.btn-primary {
+  background-color: #1791C8;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+
+.btn-close {
+  font-size: 1.2rem;
+}
+
+.modal-content {
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.modal-title {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.modal-body p {
+  font-size: 1rem;
+  color: #495057;
+}
+
+.modal-footer .btn-secondary {
+  background-color: #6c757d;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.modal-footer .btn-secondary:hover {
+  background-color: #5a6268;
+}
