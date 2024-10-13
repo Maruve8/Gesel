@@ -23,6 +23,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import com.gesel.gesel.repository.RecruiterRepository;
 
 
@@ -85,62 +87,17 @@ public class WebSecurityConfig {
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService());
+        provider.setUserDetailsService(username -> recruiterRepository.findByUsername(username)
+            .map(recruiter -> new org.springframework.security.core.userdetails.User(
+                recruiter.getUsername(),
+                recruiter.getPassword(),
+                List.of(new SimpleGrantedAuthority(recruiter.getRoles())) //asigna el rol
+            )).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username)));
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
     
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        DaoAuthenticationProvider daoAuthProvider = daoAuthenticationProvider();
-
-        InMemoryUserDetailsManager inMemoryManager = (InMemoryUserDetailsManager) userDetailsService();
-
-        return new ProviderManager(List.of(daoAuthProvider, new AuthenticationProvider() {
-            @Override
-            public Authentication authenticate(Authentication authentication) {
-                String username = authentication.getName();
-                String password = authentication.getCredentials().toString();
-
-                //carga primero de la memoria
-                try {
-                    UserDetails userDetails = inMemoryManager.loadUserByUsername(username);
-                    return new UsernamePasswordAuthenticationToken(username, password, userDetails.getAuthorities());
-                } catch (UsernameNotFoundException e) {
-                    //si no está en memoria, busca en bbdd
-                    return recruiterRepository.findByUsername(username)
-                        .map(recruiter -> new UsernamePasswordAuthenticationToken(
-                            recruiter.getUsername(),
-                            recruiter.getPassword(),
-                            List.of()
-                        )).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
-                }
-            }
-
-            @Override
-            public boolean supports(Class<?> authentication) {
-                return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
-            }
-        }));
-    }
     
-    
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User.builder()
-            .username("user")
-            .password(passwordEncoder().encode("password"))
-            .roles("USER")
-            .build();
-
-        UserDetails admin = User.builder()
-            .username("admin")
-            .password(passwordEncoder().encode("adminpassword"))
-            .roles("ADMIN")
-            .build();
-
-        return new InMemoryUserDetailsManager(user, admin);
-    }
 
     @Bean
     PasswordEncoder passwordEncoder() {

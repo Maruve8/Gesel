@@ -25,6 +25,11 @@ public class Recruiter {
 	//actualizaco con la imegen del perfil
 	private String fotoUrl;
 	
+	
+	//añado roles
+	@Column(name="roles")
+	private String roles="ROLE_USER"; //va a ser user por defecto
+	
 	//constructor
 	public Recruiter() {
 		
@@ -85,6 +90,14 @@ public class Recruiter {
 	
 	public void setFotoUrl(String fotoUrl) {
 		this.fotoUrl=fotoUrl;
+	}
+	
+	public String getRoles() {
+		return roles;
+	}
+	
+	public void setRoles(String roles) {
+		this.roles=roles;
 	}
 
 }

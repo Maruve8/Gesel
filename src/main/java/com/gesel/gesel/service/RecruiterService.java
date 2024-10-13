@@ -29,7 +29,12 @@ public class RecruiterService{
 	
 	public Recruiter saveRecruiter(Recruiter recruiter) {
 		recruiter.setPassword(passwordEncoder.encode(recruiter.getPassword()));//encripta el password
+		if(recruiter.getRoles()==null || recruiter.getRoles().isEmpty()) {
+			recruiter.setRoles("ROL_USER"); //por defeco será rol user
+		}
+		
 		return recruiterRepository.save(recruiter);
+		
 	}
 	
 	
