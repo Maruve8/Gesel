@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { ProcesoCandidatoService } from '../../services/proceso-candidato.service';
 import { ChangeDetectorRef } from '@angular/core';
 import esLocale from '@fullcalendar/core/locales/es'; //español
+import { FullCalendarComponent } from '@fullcalendar/angular';
+import { ViewChild } from '@angular/core';
 
 
 //interfaces para Candidato y Proceso
@@ -42,6 +44,11 @@ interface ProcesoCandidato {
   candidato: Candidato; 
 }
 
+interface ApiResponse {
+  id: number;
+  
+}
+
 declare var bootstrap: any;
 
 
@@ -56,6 +63,7 @@ declare var bootstrap: any;
   styleUrl: './calendario.component.css'
 })
 export class CalendarioComponent implements OnInit{
+  @ViewChild('fullCalendar') calendarComponent!: FullCalendarComponent;
 
   calendarOptions: CalendarOptions = {};
 
@@ -84,6 +92,9 @@ export class CalendarioComponent implements OnInit{
   tiposEntrevista = ['RECRUITER', 'CLIENTE', 'PROYECTO'];
 
   detallesEntrevista: any = {};//variable detalles entrevista
+
+  isEditing: boolean = false;
+
 
 
   constructor(private http: HttpClient, private procesoCandidatoService: ProcesoCandidatoService, private cdRef: ChangeDetectorRef) {
@@ -132,6 +143,7 @@ export class CalendarioComponent implements OnInit{
       next: (response: any) => {
         const entrevistas: any[] = response;  //importante response es array
         this.calendarOptions.events = entrevistas.map(entrevista => ({
+          id: entrevista.id,
           title: `Entrevista ${entrevista.candidato || 'Candidato no disponible'}`,
           start: `${entrevista.fecha}T${entrevista.hora}`, //combina fecha y hora
           end: `${entrevista.fecha}T${entrevista.hora}`,  
@@ -235,12 +247,19 @@ export class CalendarioComponent implements OnInit{
 handleEventClick(clickInfo:any){
   const entrevista=clickInfo.event;//datos entrevista
 
+  //asigno id entrevista
+  const idEntrevista = entrevista.id;
+
   console.log('Entrevista: ', entrevista);
+  console.log('ID de la entrevista: ', idEntrevista);
 
   //formato fehc ay horal del modal
   const fechaObj = new Date(entrevista.startStr);
+
+
   //modal con los detalles
   this.mostrarDetallesEntrevista({
+    id: idEntrevista,//asignar el id de la entrevista
     fecha: fechaObj.toLocaleDateString('es-ES'),
     hora: fechaObj.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),  
     candidato: entrevista.extendedProps?.candidato || 'Candidato no disponible',  
@@ -254,6 +273,8 @@ handleEventClick(clickInfo:any){
 //método detalles entrevista
 mostrarDetallesEntrevista(entrevista:any){
   this.detallesEntrevista = entrevista;
+
+  console.log('ID de la entrevista en detalles:', this.detallesEntrevista.id);
 
   //modal
   const modalElement = document.getElementById('modalDetallesEntrevista');
@@ -285,14 +306,34 @@ cerrarModal(){
       console.error('Faltan datos para añadir entrevista.');
       return;
     }
+
+    //comprobar la fecha: error fewcha no válida
+    console.log('Fecha seleccionada antes de la conversión:', this.fechaSeleccionada);
+
+    //sdeparo fecha y hora porque da error
+    const [fechaSinHora, hora] = this.fechaSeleccionada.split(' ');
+
+
+    const fechaFormateada=this.convertirFecha(fechaSinHora);
+
+
+    if (!fechaFormateada.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      console.error('Fecha no válida');
+      return;
+    }
+
+    if (!this.hora.match(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)) {
+      console.error('Hora no válida');
+      return;
+    }
     
     //objeto de la entrevista
     const nuevaEntrevista={
-      fecha: this.fechaSeleccionada.split('T')[0],
-      hora: this.hora,
+      id: this.detallesEntrevista.id || null, //id de la entrevista si está editando
+      fecha: fechaFormateada, //utilizo la fecha formateads
+      hora: hora,//la hora ya separada de la fecha
       ubicacion: this.ubicacion,
       feedback: this.feedback,
-      //recruiterId: this.recruiterId, //recruiter que crea la entrevista
       candidatoId: this.candidatoId,  
       procesoId: this.procesoId,      
       tipo: this.tipoEntrevista
@@ -312,34 +353,114 @@ cerrarModal(){
     console.log('Datos enviados:', payload);
 
 
-    //aquí se envía el payload al backend 
     this.http.post('/api/entrevistas', payload).subscribe({
       next: (response) => {
-        
-
         console.log('Entrevista creada', response);
-
-       
-        
-
-
-        //refrescar todas las entrevistas desde el backend
+  
+        //cargar todas las entrevistas desde el backend
         this.cargarEntrevistas(this.recruiterId || '');
+  
+        
+        this.limpiarFormulario();
+  
+        this.mostrarFormulario = false; 
+      },
+      error: (error) => {
+        console.error('Error al crear la entrevista', error);
+      }
+    });
+  }
 
-      //limpiar el form
-      this.hora = '';
-      this.ubicacion = '';
-      this.feedback = '';
-      this.candidatoId = null;
-      this.procesoId = null;
-      this.tipoEntrevista = '';
+//función convertir fecha para el backend en yyyy-mm-dd
+convertirFecha(fecha:string):string{
+  const partes=fecha.split('/');
+  return `${partes[2]}-${partes[1]}-${partes[0]}`;
+}
 
-      this.mostrarFormulario = false; //fuera form una vez creada entrevista
-    },
-    error: (error) => {
-      console.error('Error al crear la entrevista', error);
+//Método para limpiar el formulario después de crear 
+limpiarFormulario() {
+  this.hora = '';
+  this.ubicacion = '';
+  this.feedback = '';
+  this.candidatoId = null;
+  this.procesoId = null;
+  this.tipoEntrevista = '';
+}
+
+
+editarEntrevista() {
+
+  this.isEditing = true;
+  //cargar los datos de la entrevista seleccionada
+  this.fechaSeleccionada=this.detallesEntrevista.fecha;
+  this.hora=this.detallesEntrevista.hora;
+  this.ubicacion=this.detallesEntrevista.ubicacion;
+  this.feedback=this.detallesEntrevista.feedback;
+  this.tipoEntrevista=this.detallesEntrevista.tipo;
+
+  const candidatoSeleccionado = this.candidatos.find(c => c.nombre === this.detallesEntrevista.candidato);
+ 
+ 
+
+  if(candidatoSeleccionado){
+    this.candidatoId=candidatoSeleccionado.id;
+
+     //proceso según el candidato seleccionado
+  this.actualizarProcesoSegunCandidato();
+
+  //asignar proceso 
+  setTimeout(()=>{
+    const procesoSeleccionado=this.procesos.find(p=>p.titulo===this.detallesEntrevista.proceso);
+    if(procesoSeleccionado){
+      this.procesoId=procesoSeleccionado.id;
     }
-  });
+  }, 500);
+  }
+
+
+ 
+  
+
+  
+  this.mostrarFormulario = true;
+
+  
+  this.cerrarModal();
+}
+
+
+//eliminar entrevista
+eliminarEntrevista(){
+  console.log('ID de la entrevista en detalles: ', this.detallesEntrevista.id);
+
+  if(!this.detallesEntrevista.id){
+    console.error('No se ha seleccionado entrevista para eliminar');
+    return;
+  }
+
+  //confirmar antes de eliminar
+  if(confirm("Deseas eliminar esta entrevista?")){
+    this.http.delete(`/api/entrevistas/${this.detallesEntrevista.id}`).subscribe({
+      next:()=>{
+        console.log('Entrevista eliminada');
+
+
+        //eliminarla del calendario
+        const calendarApi=this.calendarComponent.getApi();
+        const event=calendarApi.getEventById(this.detallesEntrevista.id);
+        if(event){
+          event.remove();
+        }
+
+        this.detallesEntrevista={};
+
+        this.cerrarModal();
+      },
+      error:(error)=>{
+        console.error('Error al eliminar la entrevista', error);
+      }
+    })
+  }
 }
   
   

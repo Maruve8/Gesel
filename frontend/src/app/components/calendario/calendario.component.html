@@ -1,9 +1,9 @@
 <div id="calendar-container">
-<full-calendar [options]="calendarOptions"></full-calendar>
+<full-calendar #fullCalendar [options]="calendarOptions"></full-calendar>
 </div>
 
 <div *ngIf="mostrarFormulario" class="card mt-4 p-4 shadow-sm">
-  <h4 class="card-title text-center">Crear Entrevista el {{ fechaSeleccionada }}</h4>
+  <h4 class="card-title text-center">{{ isEditing ? 'Editar Entrevista' : 'Crear Entrevista' }} el {{ fechaSeleccionada }}</h4>
   <div class="card-body">
     <form (submit)="crearEntrevista()">
       <div class="form-group row mb-3">
@@ -95,6 +95,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+          <button type="button" class="btn btn-secondary" (click)="eliminarEntrevista()">Eliminar</button>
         </div>
       </div>
     </div>

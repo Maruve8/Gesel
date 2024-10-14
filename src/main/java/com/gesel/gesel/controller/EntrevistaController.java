@@ -113,6 +113,7 @@ public class EntrevistaController {
 	    
 	    for (Entrevista entrevista : entrevistas) {
 	        Map<String, Object> detallesEntrevista = new HashMap<>();
+	        detallesEntrevista.put("id", entrevista.getId());
 	        detallesEntrevista.put("fecha", entrevista.getFecha());
 	        detallesEntrevista.put("hora", entrevista.getHora());
 	        detallesEntrevista.put("ubicacion", entrevista.getUbicacion());

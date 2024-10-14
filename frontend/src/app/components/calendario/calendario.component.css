@@ -149,8 +149,9 @@
   .card-title {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #1791C8;
     margin-bottom: 20px;
+    color: #1791C8;
+
   }
 
   .form-group label {
@@ -197,7 +198,7 @@
 
 .modal-title {
   font-weight: bold;
-  color: #007bff;
+  color: whitesmoke;
 }
 
 .modal-body p {
