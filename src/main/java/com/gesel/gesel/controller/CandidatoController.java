@@ -3,8 +3,11 @@ package com.gesel.gesel.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.gesel.gesel.model.Candidato;
+import com.gesel.gesel.model.EstadoCandidato;
+import com.gesel.gesel.repository.CandidatoRepository;
 import com.gesel.gesel.repository.ProcesoCandidatoRepository;
 import com.gesel.gesel.service.CandidatoService;
 
@@ -30,6 +33,10 @@ public class CandidatoController {
 	
 	@Autowired
     private ProcesoCandidatoRepository procesoCandidatoRepository;
+	
+	@Autowired
+	private CandidatoRepository candidatoRepository;
+	
 	
 	@GetMapping
 	public List <Candidato> getAllCandidatos(){
@@ -108,6 +115,29 @@ public class CandidatoController {
         return ResponseEntity.ok(candidatosConProceso);
         
     }
+	
+	
+	//para obtener en el gráfico contrataciones por mes
+	@GetMapping("/contrataciones-por-mes")
+	public ResponseEntity<Map<String, Long>> getContratacionesPorMes(){
+		List<Candidato> candidatosContratados=candidatoRepository.findByEstado(EstadoCandidato.CONTRATADO);
+		
+		//mkapeo de meses a cantidad de contrataciones
+		Map<String, Long> contratacionesPorMes=candidatosContratados.stream()
+				.filter(c->c.getFechaContratacion() !=null)
+				.collect(Collectors.groupingBy(candidato->candidato.getFechaContratacion().getMonth().toString(),
+						Collectors.counting()));
+		
+		return ResponseEntity.ok(contratacionesPorMes);
+	}
+	
+	
+	//total candidatos en bbdd para gráfico
+	@GetMapping("/total-candidatos")
+	public ResponseEntity<Long> getTotalCandidatos(){
+		long totalCandidatos=candidatoRepository.count();
+		return ResponseEntity.ok(totalCandidatos);
+	}
 
 
 }

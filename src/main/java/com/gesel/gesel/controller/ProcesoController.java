@@ -1,11 +1,14 @@
 package com.gesel.gesel.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
-
+import com.gesel.gesel.model.EstadoProceso;
 import com.gesel.gesel.model.Proceso;
+import com.gesel.gesel.repository.ProcesoRepository;
 import com.gesel.gesel.service.ProcesoService;
 
 
@@ -16,6 +19,9 @@ public class ProcesoController {
 
 		@Autowired
 		private ProcesoService procesoService;
+		
+		@Autowired
+		private ProcesoRepository procesoRepository;
 		
 		@GetMapping
 		public List<Proceso> getAllProcesos(){
@@ -44,6 +50,19 @@ public class ProcesoController {
 		public void deleteProceso(@PathVariable Long id) {
 			procesoService.deleteProceso(id);
 		}
+		
+		
+		//obtener procesos activos por semana para gráfico
+		@GetMapping("/procesos-activos")
+		public ResponseEntity<Map<String, Long>> getProcesosActivosPorSemana(){
+			List<Proceso> procesosActivos=procesoRepository.findByEstado(EstadoProceso.ACTIVO);
+			
+			Map<String, Long> procesosPorDia=procesosActivos.stream()
+					.collect(Collectors.groupingBy(proceso->proceso.getFechaInicio().getDayOfWeek().toString(),
+							Collectors.counting()));
+			return ResponseEntity.ok(procesosPorDia);
+		}
+}
 
 		
-}
+

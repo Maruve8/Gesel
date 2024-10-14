@@ -65,8 +65,10 @@ public class WebSecurityConfig {
                     .requestMatchers("/api/recruiter-cliente/**").permitAll()
                     .requestMatchers("/api/proceso-candidato/**").permitAll()
                     .requestMatchers("/api/entrevistas/**").permitAll()
+                    .requestMatchers("/api/contrataciones-por-mes", "/api/entrevistas-por-semana", "/api/total-candidatos", "/api/procesos/procesos-activos").permitAll()
                  
-                .anyRequest().authenticated() //requerir autenticación para el resto
+                //.anyRequest().authenticated() //requerir autenticación para el resto
+                    .anyRequest().permitAll()  
                     
             )
             .formLogin(form -> form

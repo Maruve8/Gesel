@@ -1,5 +1,7 @@
 package com.gesel.gesel.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +20,9 @@ public class Candidato {
 	
 	private String cvUrl; //ruta cv
 	
+	//agrego fecha contratación para los gráficos
+	private LocalDate fechaContratacion;
+	
 	
 	//constructor vacío
 	public Candidato() {
@@ -31,6 +36,7 @@ public class Candidato {
 		this.descripcion=descripcion;
 		this.estado=estado;
 		this.cvUrl=CvUrl;
+		this.fechaContratacion=fechaContratacion;
 	}
 	
 	
@@ -74,6 +80,10 @@ public class Candidato {
 	
 	public void setEstado(EstadoCandidato estado) {
 		this.estado=estado;
+		//si el estado cambia a contratado, se fija esta fecha de contratación
+		if(estado==EstadoCandidato.CONTRATADO) {
+			this.fechaContratacion=LocalDate.now(); //utiliza la fecha actual
+		}
 	}
 	
 	public String getCvUrl() {
@@ -82,6 +92,14 @@ public class Candidato {
 	
 	public void setCvUrl(String cvUrl) {
 		this.cvUrl=cvUrl;
+	}
+	
+	public LocalDate getFechaContratacion() {
+		return fechaContratacion;
+	}
+	
+	public void setFechaContratacion(LocalDate fechaContratacion) {
+		this.fechaContratacion=fechaContratacion;
 	}
 	
 	

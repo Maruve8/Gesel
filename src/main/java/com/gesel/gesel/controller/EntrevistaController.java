@@ -7,6 +7,8 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.gesel.gesel.model.Candidato;
@@ -17,6 +19,7 @@ import com.gesel.gesel.model.Recruiter;
 import com.gesel.gesel.model.TipoEntrevista;
 import com.gesel.gesel.service.RecruiterEntrevistaService;
 import com.gesel.gesel.repository.CandidatoRepository;
+import com.gesel.gesel.repository.EntrevistaRepository;
 import com.gesel.gesel.repository.ProcesoRepository;
 import com.gesel.gesel.repository.RecruiterRepository;
 
@@ -40,6 +43,9 @@ public class EntrevistaController {
 	
 	@Autowired
 	private RecruiterEntrevistaService recruiterEntrevistaService;
+	
+	@Autowired
+	private EntrevistaRepository entrevistaRepository;
 	
 	
 	
@@ -140,6 +146,18 @@ public class EntrevistaController {
 	@DeleteMapping("/{id}")
 	public void deleteEntrevista(@PathVariable Long id) {
 		entrevistaService.deleteEntrevista(id);
+	}
+	
+	
+	//agrupar entrevistas por días de la semana para gráfico
+	@GetMapping("/entrevistas-por-semana")
+	public ResponseEntity<Map<String, Long>> getEntrevistasPorSemana(){
+		List<Entrevista> entrevistas=entrevistaRepository.findAll();
+		
+		Map<String, Long> entrevistasPorDia=entrevistas.stream()
+				.collect(Collectors.groupingBy(entrevista->entrevista.getFecha().getDayOfWeek().toString(),
+						Collectors.counting()));
+		return ResponseEntity.ok(entrevistasPorDia);
 	}
 
 

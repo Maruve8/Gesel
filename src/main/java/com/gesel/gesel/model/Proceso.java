@@ -1,4 +1,6 @@
 package com.gesel.gesel.model;
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -27,6 +29,11 @@ public class Proceso {
 	@Enumerated(EnumType.STRING)
 	private EstadoProceso estado;
 	
+	
+	//nuevo campo fecha inicio proceso para poder hacer el gráfico
+	private LocalDate fechaInicio;
+	
+	
 	//relación con el cliente
 	@ManyToOne
 	@JoinColumn(name= "cliente_id", nullable = false)
@@ -40,6 +47,7 @@ public class Proceso {
 	
 	//constructor vacío
 	public Proceso() {
+		this.fechaInicio=LocalDate.now(); //inicializar con fecha actual al crear el proceso
 		
 	}
 	
@@ -54,7 +62,7 @@ public class Proceso {
 		this.detalleHibrido = detalleHibrido;
 		this.estado = estado;
 		this.cliente= cliente;
-		
+		this.fechaInicio=LocalDate.now();
 	}
 	
 	
@@ -146,5 +154,13 @@ public class Proceso {
 
     public void setRecruiterNombre(String recruiterNombre) {
         this.recruiterNombre = recruiterNombre;
+    }
+    
+    public LocalDate getFechaInicio() {
+    	return fechaInicio;
+    }
+    
+    public void setFechaInicio(LocalDate fechaInicio) {
+    	this.fechaInicio=fechaInicio;
     }
 }
