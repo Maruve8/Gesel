@@ -4,6 +4,7 @@ import com.gesel.gesel.model.Candidato;
 import com.gesel.gesel.model.Proceso;
 import com.gesel.gesel.model.ProcesoCandidato;
 import com.gesel.gesel.repository.CandidatoRepository;
+import com.gesel.gesel.repository.EntrevistaRepository;
 import com.gesel.gesel.service.ProcesoCandidatoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class CandidatoService {
 	
 	@Autowired
     private ProcesoCandidatoService procesoCandidatoService; //para obtener el proceso
+	
+	@Autowired
+	private EntrevistaRepository entrevistaRepository;
 	
 	//listar candidatos
 	public List<Candidato> getAllCandidatos(){
@@ -88,4 +92,12 @@ public class CandidatoService {
 		candidatoRepository.deleteById(id);
 	}
 
+	
+	//comprobar entrevistas asignadas 
+	public boolean hasInterviews(Long candidatoId) {
+		Candidato candidato=candidatoRepository.findById(candidatoId)
+				.orElseThrow(()->new RuntimeException("Candidato no encontrado"));
+		
+		return entrevistaRepository.existsByCandidato(candidato);
+	}
 }

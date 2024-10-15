@@ -138,6 +138,14 @@ public class CandidatoController {
 		long totalCandidatos=candidatoRepository.count();
 		return ResponseEntity.ok(totalCandidatos);
 	}
+	
+	
+	//endpoint verificar si candidato tiene entrevistas
+	@GetMapping("/{id}/has-interviews")
+	public ResponseEntity<Boolean> hasInterviews(@PathVariable Long id){
+		boolean hasInterviews=candidatoService.hasInterviews(id);
+		return ResponseEntity.ok(hasInterviews);
+	}
 
 
 }

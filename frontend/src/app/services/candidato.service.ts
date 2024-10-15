@@ -48,4 +48,9 @@ export class CandidatoService {
       }
     });
   }
+
+  //verififcación entrevista para eliminar candidato
+  hasInterviews(id:number): Observable<boolean>{
+    return this.http.get<boolean>(`${this.apiURL}/${id}/has-interviews`);
+  }
 }

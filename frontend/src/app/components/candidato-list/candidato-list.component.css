@@ -1,0 +1,121 @@
+::ng-deep table.dataTable thead th {
+    background-color: #1791C8;
+    color: white;
+}
+
+::ng-deep #candidatosTable {
+    width: 100%;
+    border-collapse: collapse;
+    
+  }
+
+
+  ::ng-deep #candidatosTable thead {
+    background-color: #f8f9fa;
+    font-weight: bold;
+  }
+
+
+  ::ng-deep #candidatosTable th, #candidatosTable td {
+    padding: 12px 15px;
+    border: 1px solid #dee2e6;
+  }
+
+  ::ng-deep #candidatosTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  ::ng-deep #candidatosTable tbody tr:hover {
+    background-color: #d6e9f7;
+  }
+
+  #candidatosTable td, #candidatosTable th {
+    text-align: center; 
+    vertical-align: middle; 
+  }
+  
+  #candidatosTable th:nth-child(5), /*columna acción*/
+  #candidatosTable td:nth-child(5) {
+    width: 150px; 
+  }
+  
+
+
+  h2 {
+    text-align: center;
+    font-family: 'Arial', sans-serif; 
+    font-weight: bold;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    color: #1791C8;
+    
+  }
+
+  ::ng-deep .dataTables_wrapper .dataTables_filter {
+    float: right !important;
+    text-align: right !important;
+
+  }
+  
+
+  ::ng-deep .dataTables_wrapper .dataTables_length {
+        float: left !important;
+        text-align: left !important;
+    }
+  
+
+
+    ::ng-deep .dataTables_wrapper .dataTables_paginate {
+    float: right !important;
+    text-align: right !important;
+  }
+  
+
+
+  ::ng-deep .dataTables_wrapper .dataTables_info {
+    float: left !important;
+    text-align: left !important;
+  }
+  
+
+
+
+  ::ng-deep .pagination .page-link {
+
+    color: #1791C8 !important;
+  }
+  
+  ::ng-deep .pagination .page-item.active .page-link {
+    background-color: #1791C8 !important;
+    border-color: #1791C8 !important;
+    color: white !important;
+
+  }
+
+
+  #candidatosTable .btn {
+    margin-right: 8px; 
+  }
+  
+  #candidatosTable .btn-sm {
+    margin-right: 8px;
+  }
+
+  /*maregn tabla*/
+  .table-container {
+    margin: 0 auto; 
+    max-width: 95%; 
+  }
+  
+  @media (min-width: 1200px) {
+    .table-container {
+      max-width: 80%; 
+    }
+  }
+  
+
+
+
+  
+  

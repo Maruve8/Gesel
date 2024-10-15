@@ -71,6 +71,7 @@ public class WebSecurityConfig {
                     .anyRequest().permitAll()  
                     
             )
+            
             .formLogin(form -> form
                 .loginProcessingUrl("/api/login") //procesar la autenticación aquí
                 .permitAll()

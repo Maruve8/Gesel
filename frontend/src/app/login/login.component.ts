@@ -24,7 +24,8 @@ export class LoginComponent {
       'Content-Type': 'application/x-www-form-urlencoded'
     });
 
-    this.http.post('/api/login', loginData, { headers, observe: 'response', responseType: 'text' }).subscribe({
+    this.http.post('http://localhost:8080/api/login', loginData, { headers, observe: 'response', responseType: 'text' })
+.subscribe({
       next: (response) => {
         if (response.status === 200) {
           console.log('Login successful');
