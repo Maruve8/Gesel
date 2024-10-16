@@ -1,32 +1,54 @@
-<!--encabezado dinámico, si edit true aparecerá editar, si es false aparecerá añadir-->
-<h2>{{ isEditMode ? 'Editar Candidato' : 'Añadir Candidato' }}</h2>
-
-<form (ngSubmit)="saveCandidato()">
-    <label for="nombre">Nombre</label>
-    <input type="text" id="nombre" [(ngModel)]="candidato.nombre" name="nombre" required>>
-
-    <label for="apellidos">Apellidos</label>
-    <input type="text" id="apellidos" [(ngModel)]="candidato.apellidos" name="apellidos" required>>
-
-    <label for="descripcion">Descripción</label>
-    <input type="text" id="descripcion" [(ngModel)]="candidato.descripcion" name="descripcion">>
-
-    <label for="proceso">Proceso</label>
-        <select id="proceso" [(ngModel)]="procesoSeleccionado" name="proceso">
-            <option *ngFor="let proceso of procesos" [ngValue]="proceso">{{ proceso.titulo }}</option>
-        </select>
-
-      
-    <label for="estado">Estado</label>
-    <select id="estado" [(ngModel)]="candidato.estado" name="estado">
-        <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
-    </select>
-
-    <label for="cvUrl">Currículum</label>
-    <input type="file" id="cvUrl" (change)="onFileSelected($event)" name="cvUrl">>
-
-    <button type="submit">
-        {{isEditMode ? 'Guardar Cambios' : 'Nuevo Candidato'}}
+<div class="back-button-container">
+    <button class="btn btn-primary back-button" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i> Volver a Candidatos
     </button>
+</div>
 
-</form>
+<div class="candidate-details-container">
+    <div class="card candidate-card">
+        <div class="card-body">
+            <!--encabezado dinámico, si edit true aparecerá editar, si es false aparecerá añadir-->
+            <h1>{{ isEditMode ? 'Editar Candidato' : 'Añadir Candidato' }}</h1>
+            
+            <form (ngSubmit)="saveCandidato()" class="edit-candidate-form">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" [(ngModel)]="candidato.nombre" name="nombre" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="apellidos">Apellidos</label>
+                    <input type="text" id="apellidos" [(ngModel)]="candidato.apellidos" name="apellidos" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <input type="text" id="descripcion" [(ngModel)]="candidato.descripcion" name="descripcion" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="proceso">Proceso</label>
+                    <select id="proceso" [(ngModel)]="procesoSeleccionado" name="proceso" class="form-control">
+                        <option *ngFor="let proceso of procesos" [ngValue]="proceso">{{ proceso.titulo }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <select id="estado" [(ngModel)]="candidato.estado" name="estado" class="form-control">
+                        <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="cvUrl">Currículum</label>
+                    <input type="file" id="cvUrl" (change)="onFileSelected($event)" name="cvUrl" class="form-control">
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    {{ isEditMode ? 'Guardar Cambios' : 'Nuevo Candidato' }}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

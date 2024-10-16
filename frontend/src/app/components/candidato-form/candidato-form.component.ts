@@ -125,7 +125,10 @@ asignarProceso(): void {
   }
 }
 
-
+//volver atrás
+goBack(): void {
+  this.router.navigate(['/candidatos']);
+}
 
 
 

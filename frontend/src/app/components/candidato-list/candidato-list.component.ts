@@ -71,6 +71,27 @@ export class CandidatoListComponent implements OnInit{
     });
   }
 
+  //descargar cv en el datatable
+  descargarCV(candidato: any): void {
+    if (candidato.cvUrl) {
+
+      const fileExtension = candidato.cvUrl.split('.').pop();
+      
+      const link = document.createElement('a');
+      link.href = candidato.cvUrl; 
+      link.download = 'cv_' + candidato.nombre + '.' + fileExtension;//descargar con la extensión roiginal
+      link.click();
+    } else {
+      //modal si no hay
+      this.mostrarModalSinCV();
+    }
+  }
+//modal sin cv
+  mostrarModalSinCV(): void {
+    const modal = new bootstrap.Modal(document.getElementById('noCvModal'));
+    modal.show();
+  }
+
 
   deleteCandidato(id:number): void {
     this.candidatoService.hasInterviews(id).subscribe((hasInterviews: boolean)=>{

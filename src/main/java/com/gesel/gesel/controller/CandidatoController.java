@@ -92,7 +92,7 @@ public class CandidatoController {
 
 	// guardar el archivo en el servidor
 	private String saveFile(MultipartFile file) throws IOException {
-	    String uploadDir = "uploads/"; // ruta donde se guarda el cv
+	    String uploadDir = "public/cv/"; // ruta donde se guarda el cv
 	    Path uploadPath = Paths.get(uploadDir);
 
 	    // crear el directorio si no existe
@@ -106,6 +106,7 @@ public class CandidatoController {
 	    Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
 	    return filePath.toString(); 
+	    //return fileName;
 	}
 	
 	//obtengo candidatos con proceso asignado

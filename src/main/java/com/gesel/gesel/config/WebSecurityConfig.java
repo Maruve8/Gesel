@@ -57,6 +57,7 @@ public class WebSecurityConfig {
             		.requestMatchers("/api/login", "/", "/home").permitAll() // Permitir acceso sin autenticación
             		.requestMatchers("/api/candidatos/upload").permitAll() // Permitir acceso sin autenticación a la subida de archivos
             		.requestMatchers("/api/candidatos/add").permitAll()
+            		.requestMatchers("/api/candidatos/**").permitAll()
                     .requestMatchers("/api/recruiters/**").hasAnyRole("USER", "ADMIN") // Requiere el rol de usuario para /api/recruiters/**
                     .requestMatchers("/api/recruiters/add").hasRole("ADMIN") //solo el admin añade recruiters
                     .requestMatchers("/api/recruiter-proceso/**").permitAll()
@@ -65,10 +66,12 @@ public class WebSecurityConfig {
                     .requestMatchers("/api/recruiter-cliente/**").permitAll()
                     .requestMatchers("/api/proceso-candidato/**").permitAll()
                     .requestMatchers("/api/entrevistas/**").permitAll()
+                    .requestMatchers("/api/procesos/**").permitAll()
+                    .requestMatchers("/cv/**").permitAll()
                     .requestMatchers("/api/contrataciones-por-mes", "/api/entrevistas-por-semana", "/api/total-candidatos", "/api/procesos/procesos-activos").permitAll()
                  
-                //.anyRequest().authenticated() //requerir autenticación para el resto
-                    .anyRequest().permitAll()  
+                .anyRequest().authenticated() //requerir autenticación para el resto
+                    //.anyRequest().permitAll()  
                     
             )
             
