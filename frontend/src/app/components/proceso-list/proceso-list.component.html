@@ -1,46 +1,91 @@
 <h2>Gesel Procesos</h2>
-<table>
-    <thead>
+
+
+
+
+
+<!--no utilizo de momento la eliminación de los procesos, opto por cambiar de estado-->
+<!--modal advertencia de proceso trabajándose asignado a recruiter-->
+<div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="warningModalLabel">Advertencia</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Este proceso tiene un recruiter asignado. No se puede eliminar mientras esté trabajándose.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--no utilizo de momento la eliminación de los procesos, opto por cambiar de estado-->
+<!--modal confirmación eliminación de un proceso-->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar eliminación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ¿Estás seguro de que quieres eliminar este proceso?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="confirmDeleteBtn" (click)="confirmDelete()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--tabla procesos-->
+<div class="table-container">
+    <table id="procesosTable" class="table table-striped table-bordered">
+      <thead class="table-light">
         <tr>
-            <th>Título</th>
-            <th>Departamento</th>
-            <th>Descripción</th>
-            <th>Ubicación</th>
-            <th>Modalidad</th>
-            <th *ngIf="hasHibrido">Detalle Híbrido</th> <!-- esta columna sólo si hay modalidad híbrida-->
-            <th>Salario</th>
-            <th>Cliente</th>
-            <th>Estado</th>
-            <th>Recruiter</th>
-            <th>Acción</th>
+          <th>Título</th>
+          
+          
+          <th>Ubicación</th>
+          <th>Modalidad</th>
+          
+          <th>Salario</th>
+          <th>Cliente</th>
+          <th>Estado</th>
+          <th>Recruiter</th>
+          <th>Acción</th>
         </tr>
-    </thead>
-
-    <tbody>
+      </thead>
+  
+      <tbody>
         <tr *ngFor="let proceso of procesos">
-            <td>{{proceso.titulo}}</td>
-            <td>{{proceso.departamento}}</td>
-            <td>{{proceso.descripcion}}</td>
-            <td>{{proceso.ubicacion}}</td>
-            <td>{{proceso.modalidad}}</td>
-            <td *ngIf="proceso.modalidad === 'HIBRIDO'">{{ proceso.detalleHibrido }}</td>
-            <td>{{proceso.salario}}</td>
-            <td>{{ proceso.cliente ? proceso.cliente.nombre : 'Sin Cliente' }}</td>
-            <td>{{proceso.estado}}</td>
-            <td>{{proceso.recruiterNombre || 'No asignado'}}</td><!--columna recruiter--> 
-            <td>
-                <button (click)="deleteProceso(proceso.id)">Eliminar</button>
-                <a [routerLink]="['/procesos/edit', proceso.id]">Editar</a>
-                
-            </td>
+          <td>{{ proceso?.titulo || '' }}</td>
+          
+         
+          <td>{{ proceso?.ubicacion || '' }}</td>
+          <td>{{ proceso?.modalidad || '' }}</td>
+          
+          <td>{{ proceso?.salario || '' }}</td>
+          <td>{{ proceso?.cliente ? proceso.cliente.nombre : '' }}</td>
+          <td>{{ proceso?.estado || '' }}</td>
+          <td>{{ proceso?.recruiterNombre || '' }}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="openDeleteModal(proceso.id, proceso.recruiterNombre)">Eliminar</button>
+
+            <a class="btn btn-primary btn-sm" [routerLink]="['/procesos/edit', proceso.id]">Editar</a>
+          </td>
         </tr>
-        
-    </tbody>
-</table>
-
-
-<div style="margin-top: 20px;">
-    <a [routerLink]="['/procesos/add']">
-        <button>Añadir Proceso</button>
-    </a>
-</div>
+      </tbody>
+    </table>
+  
+    <div class="add-button-container">
+      <button class="btn btn-success" [routerLink]="['/procesos/add']">
+        <i class="fas fa-plus"></i> Añadir Proceso
+      </button>
+    </div>
+  </div>

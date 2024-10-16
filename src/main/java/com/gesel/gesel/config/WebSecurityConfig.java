@@ -47,7 +47,7 @@ public class WebSecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf
-               // .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             		.disable() //deshabilito temporalmente
             )
             .cors(cors -> cors
@@ -68,7 +68,8 @@ public class WebSecurityConfig {
                     .requestMatchers("/api/entrevistas/**").permitAll()
                     .requestMatchers("/api/procesos/**").permitAll()
                     .requestMatchers("/cv/**").permitAll()
-                    .requestMatchers("/api/contrataciones-por-mes", "/api/entrevistas-por-semana", "/api/total-candidatos", "/api/procesos/procesos-activos").permitAll()
+                    
+                    //.requestMatchers("/api/contrataciones-por-mes", "/api/entrevistas-por-semana", "/api/total-candidatos", "/api/procesos/procesos-activos").permitAll()
                  
                 .anyRequest().authenticated() //requerir autenticación para el resto
                     //.anyRequest().permitAll()  
