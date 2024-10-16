@@ -178,6 +178,24 @@
   }
 
 
+  .add-button-container {
+    margin-bottom: 20px;
+    text-align: right; 
+  }
+  
+  .btn-success {
+    background-color: #1791C8;
+    border-color: #1791C8;
+  }
+  
+  .btn-success:hover {
+    background-color: #0B5ED7;
+    border-color: #0B5ED7;
+  }
+  
+  
+
+
 
 
 
