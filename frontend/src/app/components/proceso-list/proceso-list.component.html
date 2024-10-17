@@ -74,8 +74,8 @@
           <td>{{ proceso?.cliente ? proceso.cliente.nombre : '' }}</td>
           <td>{{ proceso?.estado || '' }}</td>
           <td>{{ proceso?.recruiterNombre || '' }}</td>
-          <td>
-            <button class="btn btn-danger btn-sm" (click)="openDeleteModal(proceso.id, proceso.recruiterNombre)">Eliminar</button>
+          <td class="action-buttons">
+            <a class="btn btn-primary btn-sm" [routerLink]="['/procesos', proceso.id]">Ver</a>
 
             <a class="btn btn-primary btn-sm" [routerLink]="['/procesos/edit', proceso.id]">Editar</a>
           </td>

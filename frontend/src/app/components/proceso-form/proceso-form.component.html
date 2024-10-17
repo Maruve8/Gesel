@@ -1,52 +1,82 @@
-<!--encabezado dinámico, si edit true aparecerá editar proceso, si es false aparecerá añadir-->
-<h2>{{ isEditMode ? 'Editar Proceso' : 'Añadir Proceso' }}</h2>
-
-<form (ngSubmit)="saveProceso()">
-    <label for="titulo">Título</label>
-    <input type="text" id="titulo" [(ngModel)]="proceso.titulo" name="titulo" required>>
-
-    <label for="departamento">Departamento</label>
-    <input type="text" id="departamento" [(ngModel)]="proceso.departamento" name="departamento" required>>
-
-    <label for="descripcion">Descripción</label>
-    <input type="text" id="descripcion" [(ngModel)]="proceso.descripcion" name="descripcion" required>>
-
-    <label for="ubicacion">Ubicación</label>
-    <select id="ubicacion" [(ngModel)]="proceso.ubicacion" name="ubicacion" required>
-        <option *ngFor="let ciudad of ciudades" [value]="ciudad">{{ ciudad }}</option>
-    </select>
-
-    <label for="modalidad">Modalidad</label>
-    <select id="modalidad" [(ngModel)]="proceso.modalidad" name="modalidad" (change)="onModalidadChange()" required>
-        <option *ngFor="let modalidad of modalidades" [value]="modalidad">{{ modalidad }}</option>
-    </select>
-
-    <!--descripción de híbrido solo disponible si la modalidad es híbrido-->
-    <div *ngIf="proceso.modalidad === 'HIBRIDO'">
-        <label for="detalleHibrido">Detalle Híbrido</label>
-        <input type="text" id="detalleHibrido" [(ngModel)]="proceso.detalleHibrido" name="detalleHibrido">>
-    </div>
-
-    <label for="salario">Salario</label>
-    <input type="text" id="salario" [(ngModel)]="proceso.salario" name="salario" required>>
-
-    <label for="cliente">Cliente</label>
-    <select id="cliente" [(ngModel)]="proceso.cliente" name="cliente" required>
-        <option *ngFor="let cliente of clientes" [ngValue]="cliente">{{ cliente.nombre }}</option>
-    </select>
-    
-    <label for="estado">Estado</label>
-    <select id="estado" [(ngModel)]="proceso.estado" name="estado" required>
-        <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
-    </select>
-
-    <label for="recruiter">Recruiter</label>
-    <select id="recruiter" [(ngModel)]="recruiterSeleccionado" name="recruiter">
-        <option *ngFor="let recruiter of recruiters" [ngValue]="recruiter">{{ recruiter.nombre }}</option>
-    </select>
-
-    <button type="submit">
-        {{isEditMode ? 'Guardar Cambios' : 'Nuevo Proceso'}}
+<div class="back-button-container">
+    <button class="btn btn-primary back-button" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i> Volver a Procesos
     </button>
+</div>
 
-</form>
+<div class="candidate-details-container">
+    <div class="card candidate-card">
+        <div class="card-body">
+            <!--encabezado dinámico, si edit true aparecerá editar proceso, si es false aparecerá añadir-->
+            <h1>{{ isEditMode ? 'Editar Proceso' : 'Añadir Proceso' }}</h1>
+            
+            <form (ngSubmit)="saveProceso()" class="edit-candidate-form">
+                <div class="form-group">
+                    <label for="titulo">Título</label>
+                    <input type="text" id="titulo" [(ngModel)]="proceso.titulo" name="titulo" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="departamento">Departamento</label>
+                    <input type="text" id="departamento" [(ngModel)]="proceso.departamento" name="departamento" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <input type="text" id="descripcion" [(ngModel)]="proceso.descripcion" name="descripcion" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="ubicacion">Ubicación</label>
+                    <select id="ubicacion" [(ngModel)]="proceso.ubicacion" name="ubicacion" class="form-control" required>
+                        <option *ngFor="let ciudad of ciudades" [value]="ciudad">{{ ciudad }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="modalidad">Modalidad</label>
+                    <select id="modalidad" [(ngModel)]="proceso.modalidad" name="modalidad" (change)="onModalidadChange()" class="form-control" required>
+                        <option *ngFor="let modalidad of modalidades" [value]="modalidad">{{ modalidad }}</option>
+                    </select>
+                </div>
+
+                <!--descripción de híbrido solo disponible si la modalidad es híbrido-->
+                <div class="form-group" *ngIf="proceso.modalidad === 'HIBRIDO'">
+                    <label for="detalleHibrido">Detalle Híbrido</label>
+                    <input type="text" id="detalleHibrido" [(ngModel)]="proceso.detalleHibrido" name="detalleHibrido" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="salario">Salario</label>
+                    <input type="text" id="salario" [(ngModel)]="proceso.salario" name="salario" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cliente">Cliente</label>
+                    <select id="cliente" [(ngModel)]="proceso.cliente" name="cliente" class="form-control" required>
+                        <option *ngFor="let cliente of clientes" [ngValue]="cliente">{{ cliente.nombre }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <select id="estado" [(ngModel)]="proceso.estado" name="estado" class="form-control" required>
+                        <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="recruiter">Recruiter</label>
+                    <select id="recruiter" [(ngModel)]="recruiterSeleccionado" name="recruiter" class="form-control">
+                        <option *ngFor="let recruiter of recruiters" [ngValue]="recruiter">{{ recruiter.nombre }}</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    {{ isEditMode ? 'Guardar Cambios' : 'Nuevo Proceso' }}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+

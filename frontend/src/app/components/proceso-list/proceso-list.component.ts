@@ -20,7 +20,7 @@ declare var bootstrap: any;
 })
 export class ProcesoListComponent implements OnInit{
   procesos: any[] =[];
-  hasHibrido: boolean = false; //declaro hasHibrido para mostrar u ocultar la columna de detalle híbrido en función de la modalidad
+  hasHibrido: boolean = false; //declaro hasHibrido para mostrar u ocultar la columna de detalle híbrido en función de la modalidad. 
   procesoIdToDelete: number | null=null; //almaceno id del rpoceso para eliminar
   filteredProcesos: any[] = [];
   uniqueRecruiters: string[] = []; //lista recruiters

@@ -1,8 +1,21 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+}
+
+p {
+    font-weight: 400;
+    color: #555;
+}
+
 .candidate-details-container {
     margin: 80px auto;
     max-width: 800px;
     padding: 20px;
-    position: relative;
+    position: relative; 
 }
 
 .candidate-card {
@@ -10,7 +23,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .candidate-card h1 {
@@ -19,24 +32,28 @@
     margin-bottom: 20px;
 }
 
-.candidate-card label {
+.candidate-card p {
     font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
+    margin-bottom: 10px;
 }
 
-.candidate-card .form-control {
-    font-size: 1.1rem;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+.candidate-card hr {
+    margin: 25px 0;
 }
 
-.candidate-card button {
+.btn {
     padding: 12px 25px;
     font-size: 1.2rem;
+}
+
+.btn i {
+    margin-right: 8px;
+}
+
+.candidate-card a {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
 }
 
 .btn-primary {
@@ -51,11 +68,15 @@
     border-color: #137BA1;
 }
 
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
 .back-button-container {
     position: absolute;
-    left: 50px;
-    margin-top: 50px;
-    margin-left: 270px;
+    top: 180px; 
+    left: 320px; 
 }
 
 .back-button {
@@ -70,7 +91,8 @@
 }
 
 .back-button:hover {
-    background-color: #1791C8;
+    background-color: #1791C8;; 
     border-color: #1791C8;
+    border-style: dashed;
     color: white;
 }

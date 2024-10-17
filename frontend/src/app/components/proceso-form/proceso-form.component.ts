@@ -123,5 +123,10 @@ export class ProcesoFormComponent implements OnInit{
       });
     } 
   }
+
+  //volver
+  goBack():void{
+    window.history.back();
+  }
   }
 

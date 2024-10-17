@@ -19,6 +19,7 @@ public class Proceso {
 	private String departamento;
 	private String salario;
 	private String ubicacion;
+	
 	private String descripcion;
 	
 	@Enumerated(EnumType.STRING)//enum almacenar como string

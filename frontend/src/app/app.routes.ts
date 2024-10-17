@@ -20,6 +20,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { CalendarioComponent } from './components/calendario/calendario.component';
 import { CandidatoDetalleComponent } from './components/candidato-detalle/candidato-detalle.component';
+import { ProcesoDetalleComponent } from './components/proceso-detalle/proceso-detalle.component';
 
 
 
@@ -50,6 +51,7 @@ export const routes: Routes = [
     { path: 'perfil', component: PerfilComponent }, 
     { path: 'calendario', component: CalendarioComponent},
     { path: 'candidatos/:id', component: CandidatoDetalleComponent},
+    { path: 'procesos/:id', component: ProcesoDetalleComponent},
     { path: '', redirectTo: '/login', pathMatch: 'full' },  // ruta por defecto
     { path: '**', redirectTo: '/login', pathMatch: 'full' } //para rutas no existentes
 ];

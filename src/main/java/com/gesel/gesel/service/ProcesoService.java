@@ -36,10 +36,10 @@ public class ProcesoService {
 		if(proceso!=null) {
 			RecruiterProceso recruiterProceso=recruiterProcesoService.findRecruiterByProcesoId(proceso.getId());
 			if(recruiterProceso!=null) {
-				proceso.setDescripcion(recruiterProceso.getRecruiter().getNombre());
+				proceso.setRecruiterNombre(recruiterProceso.getRecruiter().getNombre());
 				
 			}else {
-				proceso.setDescripcion("No asignado");
+				proceso.setRecruiterNombre("No asignado");
 			}
 		}
 		return proceso;

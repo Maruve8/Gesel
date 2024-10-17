@@ -91,3 +91,15 @@ h2 {
     background-color: #0B5ED7;
     border-color: #0B5ED7;
 }
+
+
+.action-buttons{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+}
+
+.action-buttons .btn{
+    flex-grow: 1;
+}

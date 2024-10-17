@@ -1,0 +1,30 @@
+<div *ngIf="proceso">
+    <!--botón atrás-->
+    <div class="back-button-container">
+        <button class="btn btn-primary back-button" (click)="goBack()">
+            <i class="fas fa-arrow-left"></i> Volver a Procesos
+        </button>
+    </div>
+
+    <div class="candidate-details-container">
+        <div class="card candidate-card">
+            <div class="card-body">
+                <h1>{{ proceso.titulo }}</h1>
+                <p><strong>Cliente:</strong> {{ proceso.cliente?.nombre || 'Sin cliente' }}</p>
+                <p><strong>Ubicación:</strong> {{ proceso.ubicacion || 'Sin ubicación' }}</p>
+                <p><strong>Modalidad:</strong> {{ proceso.modalidad }}</p>
+                <div *ngIf="proceso.modalidad === 'HIBRIDO'">
+                    <p><strong>Detalle Híbrido:</strong> {{ proceso.detalleHibrido || 'Sin detalles' }}</p>
+                </div>
+                <p><strong>Salario:</strong> {{ proceso.salario || 'No disponible' }}</p>
+                <p><strong>Estado:</strong> {{ proceso.estado || 'Sin estado' }}</p>
+                <p><strong>Recruiter:</strong> {{ proceso.recruiterNombre || 'No asignado' }}</p>
+                <p><strong>Departamento:</strong> {{ proceso.departamento || 'No asignado' }}</p>
+                <p><strong>Descripción:</strong> {{ proceso.descripcion || 'Sin descripción' }}</p>
+                <p><strong>Fecha de Inicio:</strong> {{ proceso.fechaInicio | date:'dd/MM/yyyy' }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+  
