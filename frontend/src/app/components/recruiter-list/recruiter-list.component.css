@@ -1,0 +1,109 @@
+
+
+::ng-deep #recruitersTable{
+    width: 100% !important;
+    border-collapse: collapse !important;
+
+  }
+  
+
+  ::ng-deep #recruitersTable thead{
+    background-color: #f8f9fa !important;
+    font-weight: bold !important;
+  }
+  
+
+  ::ng-deep #recruitersTable th, #recruitersTable td{
+    padding: 12px 15px !important;
+    border: 1px solid #dee2e6 !important;
+  }
+  
+
+  ::ng-deep #recruitersTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2 !important;
+
+  }
+  
+
+  ::ng-deep #recruitersTable tbody tr:hover {
+    background-color: #d6e9f7 !important;
+  }
+  
+
+  #recruitersTable td, #recruitersTable th{
+    text-align: center !important;
+
+    vertical-align: middle !important;
+  }
+  
+
+  h2{
+    text-align: center;
+    font-family: 'Arial', sans-serif; 
+    font-weight: bold;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    color: #1791C8;}
+  
+
+  .table-container {
+    margin: 0 auto;
+    max-width: 95%;
+  }
+  
+
+  @media (min-width: 1200px) {
+    .table-container{
+      max-width: 80%;
+    }
+  }
+  
+
+  .add-button-container {
+    margin-bottom: 20px;
+    text-align: right;
+  }
+  
+
+  .btn-success {
+    background-color: #1791C8;
+    border-color: #1791C8;
+  }
+  
+
+  .btn-success:hover {
+    background-color: #0B5ED7;
+    border-color: #0B5ED7;
+
+  }
+  
+
+  .recruiter-link {
+    color: #3d3a3a;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+
+
+  .recruiter-link:hover {
+    color: #1791C8;
+    cursor: pointer;
+  }
+
+  ::ng-deep .action-buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+  }
+
+  ::ng-deep .action-buttons .btn {
+    margin: 0 5px; 
+  }
+
+
+  ::ng-deep table.dataTable thead th {
+    background-color: #1791C8 !important; 
+    color: white !important; 
+  }

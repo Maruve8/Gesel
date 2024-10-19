@@ -1,0 +1,25 @@
+.recruiters-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px; 
+
+  }
+  
+  .recruiters-button {
+    padding: 20px 120px !important; 
+    font-size: 22px !important;     
+    background-color: #1791C8 !important;
+    border: none !important;        
+    border-radius: 15px !important; 
+    color: white;        
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15) !important; 
+    transition: background-color 0.3s ease, transform 0.3s ease !important;
+  }
+  
+  .recruiters-button:hover {
+    background-color: #0B5ED7 !important; 
+    transform: translateY(-2px) !important;
+
+  }
+
+  

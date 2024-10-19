@@ -1,29 +1,56 @@
 <h2>Gesel Recruiters</h2>
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>Username</th>
-            <th>Acción</th>
-        </tr>
-    </thead>
 
+<!-- Modal para confirmar la eliminación de un recruiter -->
+<div id="confirmDeleteModal" class="modal fade" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que quieres eliminar a este recruiter?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DataTable para listar recruiters -->
+<div class="table-container">
+  <table id="recruitersTable" class="table table-striped table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Username</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
     <tbody>
-        <tr *ngFor="let recruiter of recruiters">
-            <td>{{recruiter.id}}</td>
-            <td>{{recruiter.nombre}}</td>
-            <td>{{recruiter.apellidos}}</td>
-            <td>{{recruiter.username}}</td>
-            <td>
-                <ng-container *ngIf="isAdmin()">
-                    <button (click)="deleteRecruiter(recruiter.id)">Eliminar</button>
-                    <a [routerLink]="['/recruiters/edit', recruiter.id]">Editar</a>
-                </ng-container>
-                <a [routerLink]="['/recruiters/add']">Añadir</a>
-            </td>
-        </tr>
-        
+      <tr *ngFor="let recruiter of recruiters">
+        <td>
+          <a [routerLink]="['/recruiters', recruiter.id]" class="recruiter-link">{{ recruiter.nombre }}</a>
+        </td>
+        <td>{{ recruiter.apellidos }}</td>
+        <td>{{ recruiter.username }}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="openDeleteModal(recruiter.id)">Eliminar</button>
+          <a class="btn btn-primary btn-sm" [routerLink]="['/recruiters/edit', recruiter.id]">Editar</a>
+        </td>
+      </tr>
     </tbody>
-</table>
+  </table>
+
+  <div class="add-button-container">
+    <button class="btn btn-success" [routerLink]="['/recruiters/add']">
+      <i class="fas fa-plus"></i> Añadir Recruiter
+    </button>
+  </div>
+</div>
+
+
+

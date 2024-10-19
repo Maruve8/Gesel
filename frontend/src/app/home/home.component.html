@@ -5,3 +5,9 @@
 
 
 
+<!--mostrar recruiters sólo si es el admin-->
+<div class="recruiters-button-container">
+<button *ngIf="isAdmin" class="recruiters-button" [routerLink]="['/recruiters']">
+    Recruiters
+  </button>
+</div>

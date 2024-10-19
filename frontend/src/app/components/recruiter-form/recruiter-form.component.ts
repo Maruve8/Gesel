@@ -54,4 +54,9 @@ export class RecruiterFormComponent implements OnInit {
       });
     }
   }
+
+  //volver
+  goBack():void{
+    this.router.navigate(['/recruiters']);
+  }
 }
