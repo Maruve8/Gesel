@@ -103,3 +103,15 @@ h2 {
 .action-buttons .btn{
     flex-grow: 1;
 }
+
+.proceso-link{
+    color: #3d3a3a;
+    text-decoration: none;
+    font-weight: bold;
+
+}
+
+.proceso.link:hover{
+    color: #1791C8; 
+    cursor:pointer;
+}

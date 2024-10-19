@@ -21,6 +21,8 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { CalendarioComponent } from './components/calendario/calendario.component';
 import { CandidatoDetalleComponent } from './components/candidato-detalle/candidato-detalle.component';
 import { ProcesoDetalleComponent } from './components/proceso-detalle/proceso-detalle.component';
+import { PipelineComponent } from './components/pipeline/pipeline.component';
+
 
 
 
@@ -52,6 +54,7 @@ export const routes: Routes = [
     { path: 'calendario', component: CalendarioComponent},
     { path: 'candidatos/:id', component: CandidatoDetalleComponent},
     { path: 'procesos/:id', component: ProcesoDetalleComponent},
+    { path: 'pipeline/:id', component: PipelineComponent},
     { path: '', redirectTo: '/login', pathMatch: 'full' },  // ruta por defecto
     { path: '**', redirectTo: '/login', pathMatch: 'full' } //para rutas no existentes
 ];

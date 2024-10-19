@@ -53,4 +53,21 @@ export class CandidatoService {
   hasInterviews(id:number): Observable<boolean>{
     return this.http.get<boolean>(`${this.apiURL}/${id}/has-interviews`);
   }
+
+  //candidatos por estado para pipeline
+  getCandidatosPorEstado(procesoId:number):Observable<any>{
+    return this.http.get<any>(`${this.apiURL}/proceso/${procesoId}/candidatos-por-estado`, { withCredentials: true });
+  }
+
+  //actualizar estado del candidato
+  updateCandidatoEstado(candidatoId:number, estado:string):Observable<any>{
+    //depurando errores
+    console.log(`Enviando solicitud al springboot para actualizar estado del candidato ${candidatoId} a ${estado}`);
+    return this.http.put(`${this.apiURL}/${candidatoId}/estado`, { estado }, { withCredentials: true });
+  }
+
+  getProceso(procesoId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiURL}/procesos/${procesoId}`, { withCredentials: true });
+  }
+  
 }

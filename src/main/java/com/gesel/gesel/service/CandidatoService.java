@@ -1,6 +1,7 @@
 package com.gesel.gesel.service;
 
 import com.gesel.gesel.model.Candidato;
+import com.gesel.gesel.model.EstadoCandidato;
 import com.gesel.gesel.model.Proceso;
 import com.gesel.gesel.model.ProcesoCandidato;
 import com.gesel.gesel.repository.CandidatoRepository;
@@ -86,6 +87,15 @@ public class CandidatoService {
         }
         return null;
     }
+	
+	
+	//actualizar estado del candidato
+	public Candidato updateEstadoCandidato(Long id, EstadoCandidato nuevoEstado){
+        Candidato candidato = getCandidatoById(id);
+        candidato.setEstado(nuevoEstado);
+        return candidatoRepository.save(candidato);
+    }
+	
 	
 	//eliminar
 	public void deleteCandidato(Long id) {

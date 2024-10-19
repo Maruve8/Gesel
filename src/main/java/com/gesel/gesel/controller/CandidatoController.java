@@ -7,10 +7,11 @@ import java.util.stream.Collectors;
 
 import com.gesel.gesel.model.Candidato;
 import com.gesel.gesel.model.EstadoCandidato;
+import com.gesel.gesel.model.ProcesoCandidato;
 import com.gesel.gesel.repository.CandidatoRepository;
 import com.gesel.gesel.repository.ProcesoCandidatoRepository;
 import com.gesel.gesel.service.CandidatoService;
-
+import com.gesel.gesel.service.ProcesoCandidatoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,9 @@ public class CandidatoController {
 	
 	@Autowired
 	private CandidatoRepository candidatoRepository;
+	
+	@Autowired
+	private ProcesoCandidatoService procesoCandidatoService;
 	
 	
 	@GetMapping
@@ -147,6 +151,46 @@ public class CandidatoController {
 		boolean hasInterviews=candidatoService.hasInterviews(id);
 		return ResponseEntity.ok(hasInterviews);
 	}
+	
+	
+	//obtener los candidatos de un proceso por estados (pipeline)
+	@GetMapping("/proceso/{id}/candidatos-por-estado")
+	public Map<String, List<Candidato>> getCandidatoPorEstado(@PathVariable Long id){
+		//obtengo ProcesoCandidato
+		List<ProcesoCandidato> procesoCandidatos=procesoCandidatoService.findCandidatosByProcesoId(id);
+		
+		//extraigo candidatos
+		List<Candidato> candidatos=procesoCandidatos.stream()
+		        .map(ProcesoCandidato::getCandidato)
+		        .collect(Collectors.toList());
+		
+		//los agrupo por estados
+		Map<String, List<Candidato>> candidatosPorEstado=candidatos.stream()
+				.collect(Collectors.groupingBy(candidato -> candidato.getEstado().name()));
+		
+		return candidatosPorEstado;
+	}
+	
+	
+	//actaulizar estado del candidato
+	@PutMapping("/{id}/estado")
+	public ResponseEntity<?> actualizarEstado(@PathVariable Long id, @RequestBody Map<String, String> estadoMap) {
+	    Candidato candidato = candidatoService.getCandidatoById(id);
+	    String nuevoEstado = estadoMap.get("estado");
+	    System.out.println("Actualizando estado del candidato con ID: " + id + " a: " + nuevoEstado);
+	    if (nuevoEstado == null || nuevoEstado.isEmpty()) {
+	        System.err.println("El estado recibido es nulo o vacío");
+	        return ResponseEntity.badRequest().body("El estado no puede estar vacío");
+	    }
 
-
+	    try {
+	        candidato.setEstado(EstadoCandidato.valueOf(nuevoEstado));
+	        candidatoService.updateEstadoCandidato(id, EstadoCandidato.valueOf(nuevoEstado));
+	        System.out.println("Estado del candidato actualizado correctamente en la base de datos.");
+	        return ResponseEntity.ok().build();
+	    } catch (IllegalArgumentException e) {
+	        System.err.println("Error: Estado inválido recibido: " + nuevoEstado);
+	        return ResponseEntity.badRequest().body("Estado inválido");
+	    }
+	}
 }

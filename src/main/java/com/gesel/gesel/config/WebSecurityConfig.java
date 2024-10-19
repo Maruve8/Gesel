@@ -68,6 +68,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/api/entrevistas/**").permitAll()
                     .requestMatchers("/api/procesos/**").permitAll()
                     .requestMatchers("/cv/**").permitAll()
+                    .requestMatchers("/api/pipeline").permitAll()
                     
                     //.requestMatchers("/api/contrataciones-por-mes", "/api/entrevistas-por-semana", "/api/total-candidatos", "/api/procesos/procesos-activos").permitAll()
                  

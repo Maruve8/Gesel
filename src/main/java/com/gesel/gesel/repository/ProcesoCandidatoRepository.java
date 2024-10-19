@@ -25,6 +25,7 @@ public interface ProcesoCandidatoRepository extends JpaRepository<ProcesoCandida
     List<Candidato> findCandidatosConProceso();
 	
 	
+	 List<ProcesoCandidato> findByProcesoId(Long procesoId);
 	
 
 }

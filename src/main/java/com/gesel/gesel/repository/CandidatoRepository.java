@@ -14,5 +14,7 @@ public interface CandidatoRepository extends JpaRepository<Candidato, Long>{
 	
 	//obtener candidatos por estado
 	List<Candidato> findByEstado(EstadoCandidato estado);
+	
+
 
 }

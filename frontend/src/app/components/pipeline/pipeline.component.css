@@ -1,0 +1,50 @@
+.pipeline-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 100px auto;
+    max-width: 90%;
+
+  }
+  
+  .pipeline-column {
+    width: 20%;
+    padding: 15px;
+    
+    border: 1px solid #ddd;
+    background-color: #fdfdfd;
+    border-radius: 5px;
+    min-height: 350px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  .pipeline-column h3{
+    font-size: 1.3em;
+    font-weight: bold;
+    color:  #1791C8;
+    margin-bottom: 20px;
+  }
+
+  
+  .candidate-list {
+    min-height: 300px;
+  }
+
+  
+  .candidate-item {
+    background-color: #1791C8;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    color: white;
+    cursor: grab;
+    font-weight: bold;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
+
+  }
+
+  .candidate-item:hover{
+    background-color: #0B5ED7;
+  }
+  

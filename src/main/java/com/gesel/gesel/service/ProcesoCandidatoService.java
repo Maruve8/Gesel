@@ -17,6 +17,11 @@ public class ProcesoCandidatoService {
 	public List<ProcesoCandidato> findProcesosByCandidatoId(Long candidatoId) {
         return repository.findByCandidatoId(candidatoId);
     }
+	
+	//candidatos por procesoid
+	 public List<ProcesoCandidato> findCandidatosByProcesoId(Long procesoId) {
+	        return repository.findByProcesoId(procesoId);
+	    }
 
 	
     public List<ProcesoCandidato> getAllRelations(){

@@ -1,0 +1,20 @@
+
+
+<div class="pipeline-container" cdkDropListGroup>
+  <div class="pipeline-column" *ngFor="let estado of estados">
+    <h3>{{ estado }}</h3>
+    <div
+      cdkDropList 
+      [cdkDropListData]="candidatosPorEstado[estado]"
+      class="candidate-list"
+      (cdkDropListDropped)="onDrop($event, estado)">
+      <div
+        class="candidate-item"
+        *ngFor="let candidato of candidatosPorEstado[estado]"
+        cdkDrag>
+        {{ candidato.nombre }} {{ candidato.apellidos }}
+      </div>
+    </div>
+  </div>
+</div>
+  

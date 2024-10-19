@@ -64,7 +64,7 @@
   
       <tbody>
         <tr *ngFor="let proceso of procesos">
-          <td>{{ proceso?.titulo || '' }}</td>
+          <td><a [routerLink]="['/pipeline', proceso.id]" class="proceso-link">{{ proceso?.titulo || '' }}</a></td>
           
          
           <td>{{ proceso?.ubicacion || '' }}</td>
