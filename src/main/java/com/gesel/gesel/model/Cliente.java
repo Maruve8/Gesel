@@ -2,6 +2,9 @@ package com.gesel.gesel.model;
 
 import jakarta.persistence.*;
 
+/**
+ * clase que representa un cliente
+ */
 @Entity
 @Table(name = "clientes")
 public class Cliente {
@@ -20,6 +23,14 @@ public class Cliente {
 		
 	}
 	
+	/**
+	 * constructor lleno para la clase Cliente
+	 * @param nombre ,nombre del cliente
+	 * @param descripcion , descripción del cliente
+	 * @param beneficios ,beneficios del cliente
+	 * @param telefono , teléfono del cliente
+	 * @param email ,email del cliente
+	 */
 	public Cliente(String nombre, String descripcion, String beneficios, String telefono, String email) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;

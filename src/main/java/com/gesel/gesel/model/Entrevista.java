@@ -4,6 +4,9 @@ import java.time.LocalTime;
 
 import jakarta.persistence.*;
 
+/**
+ * clase que representa una entrevista
+ */
 @Entity
 @Table (name= "entrevistas")
 public class Entrevista {
@@ -37,7 +40,16 @@ public class Entrevista {
 	}
 	
 	
-	//constructor lleno
+	/**
+	 * constructor lleno para la clase Entrevista
+	 * @param fecha ,fecha para la entrevista
+	 * @param hora ,hora de la entrevista
+	 * @param ubicacion ,ubicación de la entrevista
+	 * @param feedback ,feedback de la entrevista
+	 * @param tipo ,tipo de entrevista
+	 * @param candidato ,candidato asociado a esa entrevista
+	 * @param proceso ,proceso asociado a esa entrevista
+	 */
 	public Entrevista(LocalDate fecha, LocalTime hora, String ubicacion, String feedback, TipoEntrevista tipo, Candidato candidato, Proceso proceso) {
 		
 		this.fecha=fecha;

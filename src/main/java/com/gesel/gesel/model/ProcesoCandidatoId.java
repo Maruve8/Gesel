@@ -4,6 +4,9 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * clase que representa la clave compuesta de la relación ProcesoCandidato
+ */
 @Embeddable
 public class ProcesoCandidatoId implements Serializable{
 	
@@ -17,7 +20,11 @@ public class ProcesoCandidatoId implements Serializable{
 		
 	}
 	
-	//constructor lleno
+	/**
+	 * constructor lleno para ProcesoCandidatoId
+	 * @param procesoId ,id del proceso
+	 * @param candidatoId ,id del candidato
+	 */
 	public ProcesoCandidatoId(Long procesoId, Long candidatoId) {
 		this.procesoId=procesoId;
 		this.candidatoId=candidatoId;

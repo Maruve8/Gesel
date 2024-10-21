@@ -3,6 +3,9 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * clase que representa la clave compuesta para la relación entre Recruiter y Cliente
+ */
 @Embeddable
 public class RecruiterClienteId implements Serializable{
 	
@@ -16,7 +19,11 @@ public class RecruiterClienteId implements Serializable{
 		
 	}
 	
-	
+	/**
+	 * constructor lleno para la clase RecruiterClienteId
+	 * @param recruiterId ,id del recruiter
+	 * @param clienteId ,id del cliente
+	 */
 	public RecruiterClienteId(Long recruiterId, Long clienteId) {
 		this.recruiterId=recruiterId;
 		this.clienteId=clienteId;

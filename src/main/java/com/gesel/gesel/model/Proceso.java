@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 
+/**
+ * clase que representa un proceso de selección
+ */
 @Entity
 @Table (name="procesos")
 @JsonIgnoreProperties({"recruiters"}) // Ignora la lista de recruiters en Proceso para evitar bucles
@@ -52,7 +55,20 @@ public class Proceso {
 		
 	}
 	
-	//constructor lleno
+	
+	
+	/**
+	 * constructor lleno para la clase Proceso
+	 * @param titulo ,título del proceso de selección
+	 * @param departamento ,departamento al que pertenece ese puesto
+	 * @param salario ,salario ofertado en el proceso
+	 * @param ubicacion ,ubicación del puesto
+	 * @param descripcion ,descripción del puesto
+	 * @param modalidad ,modalidad de trabajo
+	 * @param detalleHibrido ,detalles de modelo de trabajo híbrido, si es que lo es
+	 * @param estado ,estado del proceso
+	 * @param cliente ,cliente asociado al proceso
+	 */
 	public Proceso(String titulo, String departamento, String salario, String ubicacion, String descripcion, ModalidadTrabajo modalidad, String detalleHibrido, EstadoProceso estado, Cliente cliente) {
 		this.titulo=titulo;
 		this.departamento = departamento;

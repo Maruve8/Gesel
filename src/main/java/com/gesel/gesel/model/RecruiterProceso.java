@@ -2,6 +2,9 @@ package com.gesel.gesel.model;
 
 import jakarta.persistence.*;
 
+/**
+ * clase qye representa la relación entre un recruiter y un proceso
+ */
 @Entity
 @Table(name="recruiter_proceso")
 public class RecruiterProceso {
@@ -26,7 +29,11 @@ public class RecruiterProceso {
 		
 	}
 	
-	//constructor lleno
+	/**
+	 * constructor lleno para la clase RecruiterProceso
+	 * @param recruiter ,recruiter asociado
+	 * @param proceso ,proceso asociado
+	 */
 	public RecruiterProceso(Recruiter recruiter, Proceso proceso) {
 		this.recruiter=recruiter;
 		this.proceso=proceso;

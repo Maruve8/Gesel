@@ -2,6 +2,9 @@ package com.gesel.gesel.model;
 
 import jakarta.persistence.*;
 
+/**
+ * clase que representa la relación entre Candidato y Proceso
+ */
 @Entity
 @Table(name="proceso_candidato")
 public class ProcesoCandidato {
@@ -27,7 +30,11 @@ public class ProcesoCandidato {
 		
 	}
 	
-	//constructor lleno
+	/**
+	 * constructor lleno para la clase ProcesoCandidato
+	 * @param proceso ,proceso asociado
+	 * @param candidato ,candidato asociao
+	 */
 	public ProcesoCandidato(Proceso proceso, Candidato candidato) {
 		this.proceso=proceso;
 		this.candidato=candidato;

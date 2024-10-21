@@ -4,6 +4,9 @@ import java.time.LocalDate;
 
 import jakarta.persistence.*;
 
+/**
+ * clase que representa un candidato
+ */
 @Entity
 @Table(name= "candidatos")
 public class Candidato {
@@ -28,8 +31,14 @@ public class Candidato {
 	public Candidato() {
 		}
 	
-	
-	//constructor
+	/**
+	 * constructor lleno para la clase Candidato
+	 * @param nombre ,nombre del candidato
+	 * @param apellidos ,apellidos del candidato
+	 * @param descripcion ,descripción del candidato
+	 * @param estado ,estado del candidato
+	 * @param CvUrl ,URL del cv del candidato
+	 */
 	public Candidato(String nombre, String apellidos, String descripcion, EstadoCandidato estado, String CvUrl) {
 		this.nombre = nombre;
 		this.apellidos=apellidos;

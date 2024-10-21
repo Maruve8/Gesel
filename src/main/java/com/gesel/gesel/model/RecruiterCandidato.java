@@ -2,6 +2,9 @@ package com.gesel.gesel.model;
 
 import jakarta.persistence.*;
 
+/**
+ * clase que representa la relación entre un recruiter y un candidato
+ */
 @Entity
 @Table(name="recruiter_candidato")
 public class RecruiterCandidato {
@@ -23,7 +26,11 @@ public class RecruiterCandidato {
 	public RecruiterCandidato() {}
 
 	
-	
+	/**
+	 * constructor lleno para la clase RecruiterCandidato
+	 * @param recruiter ,recruiter asociado
+	 * @param candidato ,candidato asociado
+	 */
 	public RecruiterCandidato(Recruiter recruiter, Candidato candidato) {
 		this.recruiter=recruiter;
 		this.candidato=candidato;

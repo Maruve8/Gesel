@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 
-
+/**
+ * clase que representa un REcruiter
+ */
 @Entity
 @Table(name = "recruiters")
 @JsonIgnoreProperties({"procesos"}) // Ignora la lista de procesos en Recruiter para evitar bucles
@@ -35,6 +37,11 @@ public class Recruiter {
 		
 	}
 	
+	/**
+	 * constructor lleno para clase Recruiter
+	 * @param nombre ,nombre del recruiter
+	 * @param apellidos ,apellidos del recruiter
+	 */
 	public Recruiter(String nombre, String apellidos) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
