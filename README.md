@@ -9,6 +9,7 @@ Aplicación Web destinada a la gestión de los procesos de selección en un depa
 - **Chart.js**: Para la visualización de gráficos.
 - **DataTables**: Para la visualización de tablas, ordenación y paginación.
 - **Angular CDK**: Conjunto de herramientas de Angular, en concreto Drop y Drag para arrastrar y soltar.
+- **Bootstrap**: Para el diseño responsivo y atractivo de la interfaz de usuario.
 
 ## Requisitos previos
 
